@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+@theme {
+  /* Paleta base */
+  --color-roxo-profundo: #1d0435;
+  --color-lima: #a8f300;
+  --color-nevoa: #f7f2ff;
+  --color-preto: #0d0d0d;
+  --color-rosa: #ff358d;
+
+  /* Paleta estendida (uso digital / UI) */
+  --color-roxo-noite: #1a0533;
+  --color-roxo-medio: #2e1260;
+  --color-violeta-suave: #5b21b6;
+  --color-violeta: #7c3aed;
+  --color-lima-claro: #d4f000;
+  --color-lima-eletrico: #b8f000;
+  --color-rosa-choque: #ff4d8d;
+  --color-lavanda: #f5f2ff;
+
+  --font-sans: var(--font-inter);
+  --font-marker: var(--font-marker);
+
+  --animate-marquee: marquee 34s linear infinite;
+  --animate-float: float 7s ease-in-out infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -22px, 0);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+html {
+  background: var(--color-roxo-noite);
+}
+
+body {
+  font-family: var(--font-sans);
+  position: relative;
+}
+
+/* Tactile film-grain overlay — keeps flat brand color from reading flat */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Soft blurred color fields used behind section content for depth */
+.aurora {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(110px);
+  pointer-events: none;
+}
+
+::selection {
+  background: var(--color-lima);
+  color: var(--color-roxo-noite);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-lima);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+@keyframes draw-stroke {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.hero-underline path {
+  stroke-dasharray: 420;
+  stroke-dashoffset: 420;
+  animation: draw-stroke 1.1s 0.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: currentColor;
+}
+
+.ghost-num {
+  font-family: var(--font-marker);
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--color-nevoa) 22%, transparent);
+  color: transparent;
+}
+

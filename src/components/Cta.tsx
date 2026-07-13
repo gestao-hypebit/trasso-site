@@ -1,0 +1,161 @@
+"use client";
+
+import { useState, type FormEvent } from "react";
+import { DoodleCircle, DoodleDots } from "./Doodles";
+import Magnetic from "./Magnetic";
+import Reveal from "./Reveal";
+
+export default function Cta() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    const subject = encodeURIComponent(`Novo projeto — ${name || "sem nome"}`);
+    const body = encodeURIComponent(`${message}\n\n— ${name}\n${email}`);
+    window.location.href = `mailto:gestao@trasso.com.br?subject=${subject}&body=${body}`;
+  }
+
+  return (
+    <section
+      id="contato"
+      className="relative overflow-hidden bg-roxo-noite py-32 sm:py-44"
+    >
+      <div
+        className="aurora animate-float left-1/2 top-0 h-[600px] w-[600px] -translate-x-1/2 bg-violeta/18"
+        aria-hidden="true"
+      />
+      <DoodleCircle className="pointer-events-none absolute -right-6 -top-6 h-40 w-40 text-nevoa/10" />
+      <DoodleDots className="pointer-events-none absolute bottom-10 left-10 h-16 w-16 text-nevoa/15" />
+
+      <div className="relative mx-auto max-w-4xl px-6 text-center lg:px-10">
+        <Reveal>
+          <p className="eyebrow mb-8 justify-center text-violeta">
+            Vamos conversar
+          </p>
+          <h2 className="text-5xl leading-[0.95] font-black tracking-tight text-nevoa text-balance sm:text-7xl lg:text-8xl">
+            Vamos{" "}
+            <span className="relative inline-block whitespace-nowrap text-lima">
+              traçar
+              <svg
+                className="absolute -bottom-1 left-0 w-full sm:-bottom-3"
+                viewBox="0 0 300 24"
+                preserveAspectRatio="none"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M4 14C60 4 140 2 180 10S260 20 296 8"
+                  stroke="var(--color-lima)"
+                  strokeWidth="7"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </span>{" "}
+            o próximo projeto?
+          </h2>
+        </Reveal>
+
+        <Reveal delay={0.1}>
+          <p className="mx-auto mt-8 max-w-md text-base leading-relaxed text-nevoa/60 sm:text-lg">
+            Conta pra gente o que você quer construir. A gente responde com
+            direção — não com um formulário automático.
+          </p>
+        </Reveal>
+
+        <Reveal delay={0.2}>
+          <form
+            onSubmit={handleSubmit}
+            className="mx-auto mt-16 flex max-w-xl flex-col gap-8 text-left"
+          >
+            <div className="grid gap-8 sm:grid-cols-2">
+              <div>
+                <label
+                  htmlFor="name"
+                  className="mb-2 block text-xs font-semibold tracking-wide text-nevoa/40 uppercase"
+                >
+                  Seu nome
+                </label>
+                <input
+                  id="name"
+                  type="text"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Como podemos te chamar?"
+                  className="w-full border-b border-white/15 bg-transparent py-3 text-xl font-semibold text-nevoa placeholder:font-normal placeholder:text-nevoa/25 outline-none focus:border-lima"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="email"
+                  className="mb-2 block text-xs font-semibold tracking-wide text-nevoa/40 uppercase"
+                >
+                  Seu e-mail
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="voce@empresa.com"
+                  className="w-full border-b border-white/15 bg-transparent py-3 text-xl font-semibold text-nevoa placeholder:font-normal placeholder:text-nevoa/25 outline-none focus:border-lima"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="message"
+                className="mb-2 block text-xs font-semibold tracking-wide text-nevoa/40 uppercase"
+              >
+                Sobre o projeto
+              </label>
+              <textarea
+                id="message"
+                required
+                rows={2}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Conta rapidamente o que você tem em mente"
+                className="w-full resize-none border-b border-white/15 bg-transparent py-3 text-xl font-semibold text-nevoa placeholder:font-normal placeholder:text-nevoa/25 outline-none focus:border-lima"
+              />
+            </div>
+
+            <Magnetic className="mx-auto mt-4">
+              <button
+                type="submit"
+                className="inline-flex items-center gap-3 rounded-full bg-lima px-10 py-4 text-base font-bold text-roxo-noite shadow-[0_0_0_rgba(168,243,0,0)] transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(168,243,0,0.5)]"
+              >
+                Enviar
+                <span aria-hidden="true">→</span>
+              </button>
+            </Magnetic>
+          </form>
+        </Reveal>
+
+        <Reveal delay={0.3}>
+          <div className="mt-14 flex items-center justify-center gap-8 text-sm text-nevoa/60">
+            <a
+              href="mailto:gestao@trasso.com.br"
+              className="border-b border-transparent font-semibold hover:border-lima hover:text-nevoa"
+            >
+              gestao@trasso.com.br
+            </a>
+            {/* <a
+              href="https://instagram.com/trasso"
+              target="_blank"
+              rel="noreferrer"
+              className="border-b border-transparent hover:border-lima hover:text-nevoa"
+            >
+              @trasso
+            </a> */}
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
