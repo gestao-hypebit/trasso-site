@@ -27,9 +27,10 @@ export async function sendContactMessage(
 
   const name = String(formData.get("name") ?? "").trim();
   const email = String(formData.get("email") ?? "").trim();
+  const phone = String(formData.get("phone") ?? "").trim();
   const message = String(formData.get("message") ?? "").trim();
 
-  if (!name || !email || !message) {
+  if (!name || !email || !phone || !message) {
     return { status: "error", message: "Preenche todos os campos antes de enviar." };
   }
   if (!EMAIL_PATTERN.test(email)) {
@@ -51,7 +52,7 @@ export async function sendContactMessage(
       to: CONTACT_TO,
       replyTo: email,
       subject: `Novo projeto — ${name}`,
-      text: `${message}\n\n— ${name} (${email})`,
+      text: `${message}\n\n— ${name} (${email} · ${phone})`,
     });
 
     if (error) {

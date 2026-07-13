@@ -117,20 +117,37 @@ export default function Cta() {
 
               <div>
                 <label
-                  htmlFor="email"
+                  htmlFor="phone"
                   className="mb-2 block text-xs font-semibold tracking-wide text-nevoa/40 uppercase"
                 >
-                  Seu e-mail
+                  Seu telefone
                 </label>
                 <input
-                  id="email"
-                  name="email"
-                  type="email"
+                  id="phone"
+                  name="phone"
+                  type="tel"
                   required
-                  placeholder="voce@empresa.com"
+                  placeholder="(11) 91234-5678"
                   className="w-full border-b border-white/15 bg-transparent py-3 text-xl font-semibold text-nevoa placeholder:font-normal placeholder:text-nevoa/25 outline-none focus:border-lima"
                 />
               </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="email"
+                className="mb-2 block text-xs font-semibold tracking-wide text-nevoa/40 uppercase"
+              >
+                Seu e-mail
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                placeholder="voce@empresa.com"
+                className="w-full border-b border-white/15 bg-transparent py-3 text-xl font-semibold text-nevoa placeholder:font-normal placeholder:text-nevoa/25 outline-none focus:border-lima"
+              />
             </div>
 
             <div>
