@@ -10,6 +10,7 @@ const VALID_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp", ".svg"]);
 const NAME_OVERRIDES: Record<string, string> = {
   "mais-saude": "Mais Saúde",
   "catalogo-place": "Catálogo Place",
+  "viavel": "Viável Planejamento Financeiro",
 };
 
 function nameFromFilename(filename: string) {
@@ -43,8 +44,19 @@ function getClientLogos() {
     }));
 }
 
+/** Minimum tiles in one lap so the loop reads as a continuous strip, not a stutter. */
+const MIN_MARQUEE_ITEMS = 8;
+
 export default function Clients() {
   const clients = getClientLogos();
+
+  if (clients.length === 0) return null;
+
+  const lap: typeof clients = [];
+  while (lap.length < MIN_MARQUEE_ITEMS) {
+    lap.push(...clients);
+  }
+  const track = [...lap, ...lap];
 
   return (
     <section id="clientes" className="relative overflow-hidden bg-lavanda py-28 sm:py-40">
@@ -59,31 +71,31 @@ export default function Clients() {
             segmentos — de startups a operações já estabelecidas.
           </p>
         </Reveal>
-
-        {clients.length > 0 && (
-          <Reveal delay={0.1}>
-            <div className="flex flex-wrap items-center gap-6">
-              {clients.map((client) => (
-                <div
-                  key={client.logo}
-                  className="group flex h-32 w-32 flex-col items-center justify-center gap-2 rounded-2xl border border-roxo-noite/10 bg-nevoa p-5 transition-colors duration-300 hover:bg-white"
-                >
-                  <Image
-                    src={client.logo}
-                    alt={client.name}
-                    width={80}
-                    height={80}
-                    className="h-14 w-14 object-contain grayscale transition-all duration-300 group-hover:grayscale-0"
-                  />
-                  <span className="text-center text-[11px] font-semibold text-roxo-noite/40 transition-colors duration-300 group-hover:text-roxo-noite/70">
-                    {client.name}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </Reveal>
-        )}
       </div>
+
+      <Reveal delay={0.1}>
+        <div className="relative [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+          <div className="animate-marquee flex w-max items-center gap-5 [animation-duration:38s] hover:[animation-play-state:paused]">
+            {track.map((client, i) => (
+              <div
+                key={`${client.logo}-${i}`}
+                className="group flex h-24 w-56 shrink-0 items-center justify-center gap-4 rounded-2xl border border-roxo-noite/10 bg-white px-6"
+              >
+                <Image
+                  src={client.logo}
+                  alt={client.name}
+                  width={80}
+                  height={80}
+                  className="h-11 w-11 shrink-0 object-contain grayscale transition-all duration-300 group-hover:grayscale-0"
+                />
+                <span className="truncate text-sm font-semibold text-roxo-noite/45 transition-colors duration-300 group-hover:text-roxo-noite/80">
+                  {client.name}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Reveal>
     </section>
   );
 }

@@ -1,21 +1,39 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef } from "react";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
+import { sendContactMessage, type ContactState } from "@/app/actions";
 import { DoodleCircle, DoodleDots } from "./Doodles";
 import Magnetic from "./Magnetic";
 import Reveal from "./Reveal";
 
-export default function Cta() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+const initialState: ContactState = { status: "idle", message: "" };
 
-  function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    const subject = encodeURIComponent(`Novo projeto — ${name || "sem nome"}`);
-    const body = encodeURIComponent(`${message}\n\n— ${name}\n${email}`);
-    window.location.href = `mailto:gestao@trasso.com.br?subject=${subject}&body=${body}`;
-  }
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className="inline-flex items-center gap-3 rounded-full bg-lima px-10 py-4 text-base font-bold text-roxo-noite shadow-[0_0_0_rgba(168,243,0,0)] transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(168,243,0,0.5)] disabled:cursor-not-allowed disabled:opacity-60 disabled:shadow-none"
+    >
+      {pending ? "Enviando…" : "Enviar"}
+      <span aria-hidden="true">→</span>
+    </button>
+  );
+}
+
+export default function Cta() {
+  const [state, formAction] = useActionState(sendContactMessage, initialState);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (state.status === "success") {
+      formRef.current?.reset();
+    }
+  }, [state]);
 
   return (
     <section
@@ -66,9 +84,19 @@ export default function Cta() {
 
         <Reveal delay={0.2}>
           <form
-            onSubmit={handleSubmit}
+            ref={formRef}
+            action={formAction}
             className="mx-auto mt-16 flex max-w-xl flex-col gap-8 text-left"
           >
+            <input
+              type="text"
+              name="company"
+              tabIndex={-1}
+              autoComplete="off"
+              className="hidden"
+              aria-hidden="true"
+            />
+
             <div className="grid gap-8 sm:grid-cols-2">
               <div>
                 <label
@@ -79,10 +107,9 @@ export default function Cta() {
                 </label>
                 <input
                   id="name"
+                  name="name"
                   type="text"
                   required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
                   placeholder="Como podemos te chamar?"
                   className="w-full border-b border-white/15 bg-transparent py-3 text-xl font-semibold text-nevoa placeholder:font-normal placeholder:text-nevoa/25 outline-none focus:border-lima"
                 />
@@ -97,10 +124,9 @@ export default function Cta() {
                 </label>
                 <input
                   id="email"
+                  name="email"
                   type="email"
                   required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="voce@empresa.com"
                   className="w-full border-b border-white/15 bg-transparent py-3 text-xl font-semibold text-nevoa placeholder:font-normal placeholder:text-nevoa/25 outline-none focus:border-lima"
                 />
@@ -116,23 +142,27 @@ export default function Cta() {
               </label>
               <textarea
                 id="message"
+                name="message"
                 required
                 rows={2}
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
                 placeholder="Conta rapidamente o que você tem em mente"
                 className="w-full resize-none border-b border-white/15 bg-transparent py-3 text-xl font-semibold text-nevoa placeholder:font-normal placeholder:text-nevoa/25 outline-none focus:border-lima"
               />
             </div>
 
-            <Magnetic className="mx-auto mt-4">
-              <button
-                type="submit"
-                className="inline-flex items-center gap-3 rounded-full bg-lima px-10 py-4 text-base font-bold text-roxo-noite shadow-[0_0_0_rgba(168,243,0,0)] transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(168,243,0,0.5)]"
+            {state.status !== "idle" && (
+              <p
+                aria-live="polite"
+                className={`text-sm font-semibold ${
+                  state.status === "success" ? "text-lima" : "text-rosa"
+                }`}
               >
-                Enviar
-                <span aria-hidden="true">→</span>
-              </button>
+                {state.message}
+              </p>
+            )}
+
+            <Magnetic className="mx-auto mt-4">
+              <SubmitButton />
             </Magnetic>
           </form>
         </Reveal>
