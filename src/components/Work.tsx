@@ -13,6 +13,18 @@ const SHOTS = [
     gradient: "from-rosa/40 via-roxo-medio to-roxo-noite",
     video: "/images/videonakahodo.mp4",
   },
+  {
+    title: "Enche o Bolso",
+    tag: "Landing Page",
+    gradient: "from-rosa/40 via-roxo-medio to-roxo-noite",
+    video: "/images/videoencheobolso.mp4",
+  },
+  {
+    title: "Fluminous",
+    tag: "Site institucional",
+    gradient: "from-rosa/40 via-roxo-medio to-roxo-noite",
+    video: "/images/videofluminous.mp4",
+  },
   // {
   //   title: "Maurício Nakahodo",
   //   tag: "Identidade visual",
