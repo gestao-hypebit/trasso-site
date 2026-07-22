@@ -1,5 +1,12 @@
+"use client";
+
+import { useMemo, useState } from "react";
 import Image from "next/image";
 import Reveal from "./Reveal";
+
+const INITIAL_COUNT = 6;
+const STEP = 6;
+const SPOTLIGHT_TAG = "Produto SaaS";
 
 const SHOTS = [
   // {
@@ -12,25 +19,59 @@ const SHOTS = [
     tag: "Site institucional",
     gradient: "from-rosa/40 via-roxo-medio to-roxo-noite",
     video: "/images/videonakahodo.mp4",
+    url: "https://www.mnakahodo.com.br/",
+  },
+  {
+    title: "Viável Planejamento Financeiro",
+    tag: "Site institucional",
+    gradient: "from-rosa/40 via-roxo-medio to-roxo-noite",
+    video: "/images/videoviavel.mp4",
+    url: "https://xn--vivelfinanaspessoais-jxb4l.com.br/",
   },
   {
     title: "Enche o Bolso",
     tag: "Landing Page",
     gradient: "from-rosa/40 via-roxo-medio to-roxo-noite",
     video: "/images/videoencheobolso.mp4",
+    url: "https://encheobolso.com.br/",
   },
   {
     title: "Fluminous",
     tag: "Site institucional",
     gradient: "from-rosa/40 via-roxo-medio to-roxo-noite",
     video: "/images/videofluminous.mp4",
+    url: "https://www.ffluminous.com.br/",
   },
+  {
+    title: "Planejamento Com Propósito",
+    tag: "Site institucional",
+    gradient: "from-rosa/40 via-roxo-medio to-roxo-noite",
+    video: "/images/videoplanejamentocomproposito.mp4",
+    url: "https://planejamentocomproposito.com.br/",
+  },
+  {
+    title: "Identidade Visual - Mnakahodo",
+    tag: "Identidade visual",
+    gradient: "from-rosa/40 via-roxo-medio to-roxo-noite",
+    image: "/images/idvisualmnakahodo.jpg",
+    url: "https://www.mnakahodo.com.br/",
+  },
+
   // {
   //   title: "Maurício Nakahodo",
   //   tag: "Identidade visual",
   //   gradient: "from-lima/25 via-roxo-medio to-roxo-noite",
   // },
 ];
+
+type Shot = {
+  title: string;
+  tag: string;
+  gradient: string;
+  video?: string;
+  image?: string;
+  url?: string;
+};
 
 function ProductSpotlight() {
   return (
@@ -69,13 +110,16 @@ function Card({
   n,
   className = "",
 }: {
-  item: { title: string; tag: string; gradient: string; video?: string };
+  item: Shot;
   n: number;
   className?: string;
 }) {
   return (
-    <div
-      className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-roxo-noite ${className}`}
+    <a
+      href={item.url}
+      target="_blank"
+      rel="noreferrer"
+      className={`group relative block overflow-hidden rounded-2xl border border-white/10 bg-roxo-noite ${className}`}
     >
       {item.video ? (
         <video
@@ -86,6 +130,14 @@ function Card({
           playsInline
           preload="metadata"
           className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+        />
+      ) : item.image ? (
+        <Image
+          src={item.image}
+          alt={item.title}
+          fill
+          sizes="(min-width: 640px) 33vw, 100vw"
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
         />
       ) : (
         <div
@@ -116,15 +168,47 @@ function Card({
           </span>
         </span>
       </div>
-    </div>
+    </a>
   );
 }
 
 export default function Work() {
+  const categories = useMemo(
+    () => [
+      "Todos",
+      ...Array.from(new Set(SHOTS.map((s) => s.tag))),
+      SPOTLIGHT_TAG,
+    ],
+    [],
+  );
+
+  const [activeCategory, setActiveCategory] = useState("Todos");
+  const [visibleCount, setVisibleCount] = useState(INITIAL_COUNT);
+
+  const filtered = useMemo(
+    () =>
+      activeCategory === "Todos" || activeCategory === SPOTLIGHT_TAG
+        ? SHOTS
+        : SHOTS.filter((s) => s.tag === activeCategory),
+    [activeCategory],
+  );
+
+  const showSpotlight =
+    activeCategory === "Todos" || activeCategory === SPOTLIGHT_TAG;
+  const visible =
+    activeCategory === SPOTLIGHT_TAG ? [] : filtered.slice(0, visibleCount);
+  const hasMore =
+    activeCategory === SPOTLIGHT_TAG ? false : visibleCount < filtered.length;
+
+  function selectCategory(category: string) {
+    setActiveCategory(category);
+    setVisibleCount(INITIAL_COUNT);
+  }
+
   return (
     <section id="trabalhos" className="relative bg-roxo-medio py-28 sm:py-40">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
-        <Reveal className="mb-16 flex flex-wrap items-end justify-between gap-6">
+        <Reveal className="mb-10 flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-2xl">
             <p className="eyebrow mb-5 text-lima">Portfólio</p>
             <h2 className="text-4xl font-black leading-[1.05] tracking-tight text-nevoa text-balance sm:text-5xl lg:text-6xl">
@@ -140,18 +224,49 @@ export default function Work() {
           </a>
         </Reveal>
 
+        <Reveal className="mb-10 flex flex-wrap gap-3">
+          {categories.map((category) => (
+            <button
+              key={category}
+              type="button"
+              onClick={() => selectCategory(category)}
+              className={`rounded-full border px-4 py-2 text-sm font-semibold transition-colors ${
+                activeCategory === category
+                  ? "border-lima bg-lima text-roxo-noite"
+                  : "border-white/15 text-nevoa/70 hover:border-lima/50 hover:text-lima"
+              }`}
+            >
+              {category}
+            </button>
+          ))}
+        </Reveal>
+
         <div className="grid gap-5">
-          <Reveal>
-            <ProductSpotlight />
-          </Reveal>
+          {showSpotlight && (
+            <Reveal>
+              <ProductSpotlight />
+            </Reveal>
+          )}
 
           <div className="grid gap-5 sm:grid-cols-3">
-            {SHOTS.map((item, i) => (
-              <Reveal key={`${item.title}-${item.tag}`} delay={(i + 1) * 0.08}>
+            {visible.map((item, i) => (
+              <Reveal key={`${item.title}-${item.tag}`} delay={(i % STEP) * 0.08}>
                 <Card item={item} n={i + 2} className="aspect-3/4" />
               </Reveal>
             ))}
           </div>
+
+          {hasMore && (
+            <Reveal className="flex justify-center pt-4">
+              <button
+                type="button"
+                onClick={() => setVisibleCount((c) => c + STEP)}
+                className="rounded-full border border-lima/50 px-6 py-3 text-sm font-semibold text-lima transition-colors hover:bg-lima hover:text-roxo-noite"
+              >
+                Ver mais trabalhos ↓
+              </button>
+            </Reveal>
+          )}
         </div>
       </div>
     </section>
