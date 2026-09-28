@@ -12,8 +12,14 @@ import Faq from "@/components/Faq";
 import Slogan from "@/components/Slogan";
 import Cta from "@/components/Cta";
 import Footer from "@/components/Footer";
+import { getFormulario } from "@/lib/formulario";
 
-export default function Home() {
+// O formulário de contato vem do administrativo; atualiza a cada minuto.
+export const revalidate = 60;
+
+export default async function Home() {
+  const formulario = await getFormulario();
+
   return (
     <>
       <Navbar />
@@ -29,7 +35,7 @@ export default function Home() {
           <Testimonials />
           <Faq />
           <Slogan />
-          <Cta />
+          <Cta formulario={formulario} />
         </main>
         <Footer />
       </TracoLine>

@@ -1,39 +1,156 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { useActionState } from "react";
-import { useFormStatus } from "react-dom";
+import { useActionState, useState, startTransition, type FormEvent } from "react";
 import { sendContactMessage, type ContactState } from "@/app/actions";
+import type { Campo, FormularioPublico } from "@/lib/formulario";
 import { DoodleCircle, DoodleDots } from "./Doodles";
 import Magnetic from "./Magnetic";
 import Reveal from "./Reveal";
 
 const initialState: ContactState = { status: "idle", message: "" };
+const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
 
-function SubmitButton() {
-  const { pending } = useFormStatus();
+const labelClass = "mb-2 block text-xs font-semibold tracking-wide text-nevoa/40 uppercase";
+const inputClass =
+  "w-full border-b border-white/15 bg-transparent py-3 text-xl font-semibold text-nevoa placeholder:font-normal placeholder:text-nevoa/25 outline-none transition-colors focus:border-lima aria-invalid:border-rosa";
+
+/** (11) 91234-5678 enquanto digita. */
+function mascaraTelefone(valor: string) {
+  const d = valor.replace(/\D/g, "").slice(0, 11);
+  if (d.length <= 2) return d.length ? `(${d}` : "";
+  if (d.length <= 6) return `(${d.slice(0, 2)}) ${d.slice(2)}`;
+  if (d.length <= 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
+  return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
+}
+
+function CampoInput({ campo, erro, onChange }: { campo: Campo; erro?: string; onChange: () => void }) {
+  const id = `campo-${campo.chave}`;
+  const common = {
+    id,
+    name: campo.chave,
+    required: campo.obrigatorio,
+    "aria-invalid": erro ? true : undefined,
+    "aria-describedby": erro ? `${id}-erro` : undefined,
+    onChange,
+  };
+
+  const rotulo = (
+    <>
+      {campo.rotulo}
+      {!campo.obrigatorio && <span className="ml-1.5 normal-case tracking-normal text-nevoa/25">(opcional)</span>}
+    </>
+  );
+
+  let controle;
+  if (campo.tipo === "opcoes" || campo.tipo === "multiplas") {
+    const multipla = campo.tipo === "multiplas";
+    return (
+      <fieldset aria-describedby={erro ? `${id}-erro` : undefined}>
+        <legend className={labelClass}>
+          {rotulo}
+          {multipla && <span className="ml-1.5 normal-case tracking-normal text-nevoa/25">— pode marcar mais de um</span>}
+        </legend>
+        <div className="mt-1 flex flex-wrap gap-2">
+          {(campo.opcoes ?? []).map((opcao) => (
+            <label
+              key={opcao}
+              className="cursor-pointer rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-nevoa/70 transition-colors select-none hover:border-nevoa/40 hover:text-nevoa has-checked:border-lima has-checked:bg-lima has-checked:text-roxo-noite has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-lima"
+            >
+              <input
+                type={multipla ? "checkbox" : "radio"}
+                name={campo.chave}
+                value={opcao}
+                required={!multipla && campo.obrigatorio}
+                onChange={onChange}
+                className="sr-only"
+              />
+              {opcao}
+            </label>
+          ))}
+        </div>
+        {erro && <p id={`${id}-erro`} className="mt-2 text-sm font-semibold text-rosa">{erro}</p>}
+      </fieldset>
+    );
+  } else if (campo.tipo === "textarea") {
+    controle = (
+      <textarea
+        {...common}
+        rows={3}
+        placeholder={campo.placeholder}
+        className={`${inputClass} resize-none`}
+      />
+    );
+  } else if (campo.tipo === "select") {
+    controle = (
+      <select {...common} defaultValue="" className={`${inputClass} cursor-pointer appearance-none [&:has(option[value='']:checked)]:text-nevoa/25`}>
+        <option value="" disabled>{campo.placeholder || "Selecione"}</option>
+        {(campo.opcoes ?? []).map((opcao) => (
+          <option key={opcao} value={opcao} className="bg-roxo-noite text-nevoa">{opcao}</option>
+        ))}
+      </select>
+    );
+  } else {
+    const tipo = campo.tipo === "email" ? "email" : campo.tipo === "telefone" ? "tel" : "text";
+    controle = (
+      <input
+        {...common}
+        type={tipo}
+        placeholder={campo.placeholder}
+        autoComplete={campo.chave === "nome" ? "name" : tipo === "email" ? "email" : tipo === "tel" ? "tel" : undefined}
+        inputMode={tipo === "tel" ? "tel" : undefined}
+        onInput={
+          tipo === "tel"
+            ? (e) => {
+                e.currentTarget.value = mascaraTelefone(e.currentTarget.value);
+              }
+            : undefined
+        }
+        className={inputClass}
+      />
+    );
+  }
 
   return (
-    <button
-      type="submit"
-      disabled={pending}
-      className="inline-flex items-center gap-3 rounded-full bg-lima px-10 py-4 text-base font-bold text-roxo-noite shadow-[0_0_0_rgba(168,243,0,0)] transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(168,243,0,0.5)] disabled:cursor-not-allowed disabled:opacity-60 disabled:shadow-none"
-    >
-      {pending ? "Enviando…" : "Enviar"}
-      <span aria-hidden="true">→</span>
-    </button>
+    <div>
+      <label htmlFor={id} className={labelClass}>{rotulo}</label>
+      {controle}
+      {erro && <p id={`${id}-erro`} className="mt-2 text-sm font-semibold text-rosa">{erro}</p>}
+    </div>
   );
 }
 
-export default function Cta() {
-  const [state, formAction] = useActionState(sendContactMessage, initialState);
-  const formRef = useRef<HTMLFormElement>(null);
+export default function Cta({ formulario }: { formulario: FormularioPublico | null }) {
+  const [state, formAction, pending] = useActionState(sendContactMessage, initialState);
+  const [erros, setErros] = useState<Record<string, string>>({});
+  const [enviado, setEnviado] = useState(false);
 
-  useEffect(() => {
-    if (state.status === "success") {
-      formRef.current?.reset();
-    }
-  }, [state]);
+  // Cada resposta nova do servidor reinicia os erros por campo.
+  const [ultimoState, setUltimoState] = useState(state);
+  if (state !== ultimoState) {
+    setUltimoState(state);
+    setErros(state.erros ?? {});
+    if (state.status === "success") setEnviado(true);
+  }
+
+  // Submissão manual: com `action={...}` o React limpa o formulário mesmo
+  // quando dá erro, e o visitante perderia tudo o que digitou.
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    fd.set("_pagina", window.location.pathname);
+    const params = new URLSearchParams(window.location.search);
+    UTM_KEYS.forEach((k) => params.get(k) && fd.set(`_${k}`, params.get(k)!));
+    startTransition(() => formAction(fd));
+  }
+
+  function limparErro(chave: string) {
+    if (!erros[chave]) return;
+    setErros((atual) => {
+      const resto = { ...atual };
+      delete resto[chave];
+      return resto;
+    });
+  }
 
   return (
     <section
@@ -77,129 +194,78 @@ export default function Cta() {
 
         <Reveal delay={0.1}>
           <p className="mx-auto mt-8 max-w-md text-base leading-relaxed text-nevoa/60 sm:text-lg">
-            Conta pra gente o que você quer construir. A gente responde com
-            direção — não com um formulário automático.
+            {formulario?.subtitulo ??
+              "Conta pra gente o que você quer construir. A gente responde com direção — não com um formulário automático."}
           </p>
         </Reveal>
 
-        <Reveal delay={0.2}>
-          <form
-            ref={formRef}
-            action={formAction}
-            className="mx-auto mt-16 flex max-w-xl flex-col gap-8 text-left"
-          >
-            <input
-              type="text"
-              name="company"
-              tabIndex={-1}
-              autoComplete="off"
-              className="hidden"
-              aria-hidden="true"
-            />
-
-            <div className="grid gap-8 sm:grid-cols-2">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="mb-2 block text-xs font-semibold tracking-wide text-nevoa/40 uppercase"
+        {formulario && (
+          <Reveal delay={0.2}>
+            {enviado ? (
+              <div
+                role="status"
+                className="mx-auto mt-16 max-w-xl rounded-3xl border border-lima/30 bg-lima/5 px-8 py-12"
+              >
+                <p className="text-5xl" aria-hidden="true">✓</p>
+                <p className="mt-4 text-2xl font-black text-nevoa">{state.message}</p>
+                <button
+                  type="button"
+                  onClick={() => setEnviado(false)}
+                  className="mt-6 border-b border-nevoa/30 text-sm font-semibold text-nevoa/60 hover:border-lima hover:text-nevoa"
                 >
-                  Seu nome
-                </label>
+                  Enviar outra mensagem
+                </button>
+              </div>
+            ) : (
+              <form
+                onSubmit={handleSubmit}
+                className="mx-auto mt-16 grid max-w-xl gap-x-8 gap-y-10 text-left sm:grid-cols-2"
+              >
                 <input
-                  id="name"
-                  name="name"
                   type="text"
-                  required
-                  placeholder="Como podemos te chamar?"
-                  className="w-full border-b border-white/15 bg-transparent py-3 text-xl font-semibold text-nevoa placeholder:font-normal placeholder:text-nevoa/25 outline-none focus:border-lima"
+                  name="company"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  className="hidden"
+                  aria-hidden="true"
                 />
-              </div>
 
-              <div>
-                <label
-                  htmlFor="phone"
-                  className="mb-2 block text-xs font-semibold tracking-wide text-nevoa/40 uppercase"
-                >
-                  Seu telefone
-                </label>
-                <input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  required
-                  placeholder="(11) 91234-5678"
-                  className="w-full border-b border-white/15 bg-transparent py-3 text-xl font-semibold text-nevoa placeholder:font-normal placeholder:text-nevoa/25 outline-none focus:border-lima"
-                />
-              </div>
-            </div>
+                {formulario.campos.map((campo) => (
+                  <div key={campo.id} className={campo.largura === "metade" ? "" : "sm:col-span-2"}>
+                    <CampoInput campo={campo} erro={erros[campo.chave]} onChange={() => limparErro(campo.chave)} />
+                  </div>
+                ))}
 
-            <div>
-              <label
-                htmlFor="email"
-                className="mb-2 block text-xs font-semibold tracking-wide text-nevoa/40 uppercase"
-              >
-                Seu e-mail
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                placeholder="voce@empresa.com"
-                className="w-full border-b border-white/15 bg-transparent py-3 text-xl font-semibold text-nevoa placeholder:font-normal placeholder:text-nevoa/25 outline-none focus:border-lima"
-              />
-            </div>
+                {state.status === "error" && (
+                  <p aria-live="polite" className="text-sm font-semibold text-rosa sm:col-span-2">
+                    {state.message}
+                  </p>
+                )}
 
-            <div>
-              <label
-                htmlFor="message"
-                className="mb-2 block text-xs font-semibold tracking-wide text-nevoa/40 uppercase"
-              >
-                Sobre o projeto
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                required
-                rows={2}
-                placeholder="Conta rapidamente o que você tem em mente"
-                className="w-full resize-none border-b border-white/15 bg-transparent py-3 text-xl font-semibold text-nevoa placeholder:font-normal placeholder:text-nevoa/25 outline-none focus:border-lima"
-              />
-            </div>
-
-            {state.status !== "idle" && (
-              <p
-                aria-live="polite"
-                className={`text-sm font-semibold ${
-                  state.status === "success" ? "text-lima" : "text-rosa"
-                }`}
-              >
-                {state.message}
-              </p>
+                <Magnetic className="mx-auto mt-2 sm:col-span-2">
+                  <button
+                    type="submit"
+                    disabled={pending}
+                    className="inline-flex items-center gap-3 rounded-full bg-lima px-10 py-4 text-base font-bold text-roxo-noite shadow-[0_0_0_rgba(168,243,0,0)] transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(168,243,0,0.5)] disabled:cursor-not-allowed disabled:opacity-60 disabled:shadow-none"
+                  >
+                    {pending ? "Enviando…" : formulario.botao_texto}
+                    <span aria-hidden="true">→</span>
+                  </button>
+                </Magnetic>
+              </form>
             )}
-
-            <Magnetic className="mx-auto mt-4">
-              <SubmitButton />
-            </Magnetic>
-          </form>
-        </Reveal>
+          </Reveal>
+        )}
 
         <Reveal delay={0.3}>
           <div className="mt-14 flex items-center justify-center gap-8 text-sm text-nevoa/60">
+            {formulario && <span className="text-nevoa/40">Prefere e-mail?</span>}
             <a
               href="mailto:gestao@trasso.com.br"
               className="border-b border-transparent font-semibold hover:border-lima hover:text-nevoa"
             >
               gestao@trasso.com.br
             </a>
-            {/* <a
-              href="https://instagram.com/trasso"
-              target="_blank"
-              rel="noreferrer"
-              className="border-b border-transparent hover:border-lima hover:text-nevoa"
-            >
-              @trasso
-            </a> */}
           </div>
         </Reveal>
       </div>
