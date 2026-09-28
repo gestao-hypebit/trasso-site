@@ -7,11 +7,10 @@ import Services from "@/components/Services";
 import Clients from "@/components/Clients";
 import Process from "@/components/Process";
 import Work from "@/components/Work";
-import Testimonials from "@/components/Testimonials";
 import Faq from "@/components/Faq";
-import Slogan from "@/components/Slogan";
 import Cta from "@/components/Cta";
 import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import { getFormulario } from "@/lib/formulario";
 
 // O formulário de contato vem do administrativo; atualiza a cada minuto.
@@ -27,18 +26,18 @@ export default async function Home() {
         <main>
           <Hero />
           <Marquee />
+          <Clients />
           <About />
           <Services />
-          <Clients />
-          <Process />
           <Work />
-          <Testimonials />
+          <Process />
+          {/* Depoimentos voltam quando houver falas reais de clientes (ver Testimonials.tsx). */}
           <Faq />
-          <Slogan />
           <Cta formulario={formulario} />
         </main>
         <Footer />
       </TracoLine>
+      <WhatsAppButton />
     </>
   );
 }

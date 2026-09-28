@@ -3,6 +3,7 @@
 import { useActionState, useState, startTransition, type FormEvent } from "react";
 import { sendContactMessage, type ContactState } from "@/app/actions";
 import type { Campo, FormularioPublico } from "@/lib/formulario";
+import { whatsappUrl } from "@/lib/whatsapp";
 import { DoodleCircle, DoodleDots } from "./Doodles";
 import Magnetic from "./Magnetic";
 import Reveal from "./Reveal";
@@ -258,8 +259,18 @@ export default function Cta({ formulario }: { formulario: FormularioPublico | nu
         )}
 
         <Reveal delay={0.3}>
-          <div className="mt-14 flex items-center justify-center gap-8 text-sm text-nevoa/60">
-            {formulario && <span className="text-nevoa/40">Prefere e-mail?</span>}
+          <div className="mt-14 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-nevoa/60">
+            {formulario && <span className="text-nevoa/40">Prefere falar direto?</span>}
+            {whatsappUrl && (
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="border-b border-transparent font-semibold hover:border-lima hover:text-nevoa"
+              >
+                WhatsApp
+              </a>
+            )}
             <a
               href="mailto:gestao@trasso.com.br"
               className="border-b border-transparent font-semibold hover:border-lima hover:text-nevoa"

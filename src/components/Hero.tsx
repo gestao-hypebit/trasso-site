@@ -50,9 +50,12 @@ export default function Hero() {
           className="fade-up mt-10 max-w-xl text-lg leading-relaxed text-nevoa/65 sm:text-xl"
           style={{ animationDelay: "0.3s" }}
         >
-          Somos a Trasso: uma agência que une estratégia, criatividade e
-          tecnologia em um único movimento — para marcas que querem parecer
-          consistentes, expressivas e intencionais.
+          Somos a Trasso: criamos{" "}
+          <span className="font-semibold text-nevoa">
+            sites, sistemas, apps e identidades visuais
+          </span>{" "}
+          sob medida — estratégia, criatividade e tecnologia em um único
+          movimento.
         </p>
 
         <div

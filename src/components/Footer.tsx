@@ -41,7 +41,7 @@ export default function Footer() {
       </div>
 
       <div className="relative mx-auto mt-10 max-w-7xl border-t border-white/10 px-6 pt-6 text-xs text-nevoa/30 lg:px-10">
-        Trasso — Creative Agency · Since 2026
+        Trasso — Agência criativa · Desde 2026
       </div>
     </footer>
   );

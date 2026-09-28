@@ -73,35 +73,73 @@ type Shot = {
   url?: string;
 };
 
+const SPOTLIGHT_POINTS = [
+  "Produto, design e código feitos pela Trasso",
+  "Pedidos dos clientes chegam direto no WhatsApp do lojista",
+  "Em produção, com suporte e evolução contínua",
+];
+
 function ProductSpotlight() {
   return (
-    <a
-      href="https://www.catalogoplace.com.br/"
-      target="_blank"
-      rel="noreferrer"
-      className="group relative block aspect-1717/916 w-full overflow-hidden rounded-2xl border border-white/10 bg-roxo-noite"
+    <div
+      id="catalogo-place"
+      className="grid scroll-mt-28 overflow-hidden rounded-2xl border border-white/10 bg-roxo-noite lg:grid-cols-[1.5fr_1fr]"
     >
-      <Image
-        src="/images/bgcatalogoplace.png"
-        alt="Catálogo Place — plataforma de catálogo digital com pedidos via WhatsApp"
-        fill
-        sizes="100vw"
-        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-      />
+      <a
+        href="https://www.catalogoplace.com.br/"
+        target="_blank"
+        rel="noreferrer"
+        className="group relative block aspect-1717/916 w-full overflow-hidden"
+      >
+        <Image
+          src="/images/bgcatalogoplace.png"
+          alt="Catálogo Place — plataforma de catálogo digital com pedidos via WhatsApp"
+          fill
+          sizes="(min-width: 1024px) 60vw, 100vw"
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+        />
+        <span className="absolute top-4 left-4 rounded-full border border-lima/50 bg-roxo-noite/70 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-lima backdrop-blur-sm sm:top-6 sm:left-6">
+          Produto SaaS
+        </span>
+      </a>
 
-      <span className="absolute top-4 left-4 rounded-full border border-lima/50 bg-roxo-noite/70 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-lima backdrop-blur-sm sm:top-6 sm:left-6">
-        Produto SaaS
-      </span>
+      <div className="flex flex-col justify-center gap-6 p-7 sm:p-10">
+        <div>
+          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-lima">
+            Software próprio
+          </p>
+          <h3 className="text-2xl font-black tracking-tight text-nevoa sm:text-3xl">
+            Catálogo Place
+          </h3>
+          <p className="mt-3 text-sm leading-relaxed text-nevoa/60 sm:text-base">
+            Plataforma de catálogo digital para lojistas venderem pelo
+            WhatsApp. A prova de que a gente não só entrega software — a gente
+            opera um.
+          </p>
+        </div>
 
-      <div className="absolute inset-0 flex items-center justify-center bg-roxo-noite/0 opacity-0 backdrop-blur-0 transition-all duration-300 group-hover:bg-roxo-noite/70 group-hover:opacity-100 group-hover:backdrop-blur-sm">
-        <span className="flex items-center gap-2 text-base font-semibold text-lima">
+        <ul className="flex flex-col gap-3">
+          {SPOTLIGHT_POINTS.map((point) => (
+            <li key={point} className="flex gap-3 text-sm text-nevoa/80">
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-lima" aria-hidden="true" />
+              {point}
+            </li>
+          ))}
+        </ul>
+
+        <a
+          href="https://www.catalogoplace.com.br/"
+          target="_blank"
+          rel="noreferrer"
+          className="group flex w-fit items-center gap-2 text-sm font-semibold text-lima"
+        >
           Visitar catalogoplace.com.br
           <span className="transition-transform duration-300 group-hover:translate-x-1">
             ↗
           </span>
-        </span>
+        </a>
       </div>
-    </a>
+    </div>
   );
 }
 
@@ -162,9 +200,9 @@ function Card({
           {item.title}
         </h3>
         <span className="mt-3 flex items-center gap-2 text-sm font-semibold text-lima opacity-0 transition-all duration-300 group-hover:opacity-100">
-          Ver case
+          Ver no ar
           <span className="transition-transform duration-300 group-hover:translate-x-1">
-            →
+            ↗
           </span>
         </span>
       </div>

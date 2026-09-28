@@ -4,9 +4,8 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 /**
- * Placeholder social proof — Trasso is a brand-new agency (since 2026),
- * so these are illustrative quotes to swap for real client feedback
- * once collected, not fabricated named endorsements.
+ * PLACEHOLDER — fora da página (ver app/page.tsx). Estas falas são ilustrativas;
+ * troque por depoimentos reais (nome, empresa, logo) antes de reativar a seção.
  */
 const QUOTES = [
   {

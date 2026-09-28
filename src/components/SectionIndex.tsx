@@ -4,12 +4,11 @@ import { useEffect, useState } from "react";
 
 const SECTIONS = [
   { id: "topo", label: "Início" },
+  { id: "clientes", label: "Clientes" },
   { id: "sobre", label: "Sobre" },
   { id: "servicos", label: "Serviços" },
-  { id: "clientes", label: "Clientes" },
-  { id: "processo", label: "Processo" },
   { id: "trabalhos", label: "Trabalhos" },
-  { id: "depoimentos", label: "Depoimentos" },
+  { id: "processo", label: "Processo" },
   { id: "faq", label: "FAQ" },
   { id: "contato", label: "Contato" },
 ];

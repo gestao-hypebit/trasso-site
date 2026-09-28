@@ -6,23 +6,31 @@ import { DoodleSpiral } from "./Doodles";
 const ITEMS = [
   {
     q: "Como funciona o primeiro contato?",
-    a: "Você conta o que precisa pelo formulário ou e-mail, a gente agenda uma conversa de 30 minutos e já sai dali com direção clara sobre escopo e próximos passos.",
-  },
-  {
-    q: "Vocês atendem empresas de que porte?",
-    a: "De startups a operações já estabelecidas. O que muda é o escopo do projeto, não o nível de atenção.",
+    a: "Você conta o que precisa pelo formulário, WhatsApp ou e-mail, a gente agenda uma conversa de 30 minutos e já sai dali com direção clara sobre escopo e próximos passos.",
   },
   {
     q: "Quanto tempo leva um projeto?",
-    a: "Depende do escopo: uma identidade de marca costuma levar de 3 a 6 semanas; um produto digital, de 6 a 12. Definimos o prazo junto com você já na fase de estratégia.",
+    a: "Depende do escopo: um site institucional ou uma identidade visual costuma levar de 3 a 6 semanas; sistemas e apps, de 6 a 12. Definimos o prazo junto com você já na fase de estratégia.",
   },
   {
     q: "Como funciona o orçamento?",
-    a: "Por escopo fechado ou por squad dedicado, dependendo do projeto. Sem letra miúda — você sabe exatamente pelo que está pagando antes de começar.",
+    a: "Por escopo fechado: antes de começar você recebe uma proposta com o que será entregue, o prazo e o valor. Sem letra miúda.",
+  },
+  {
+    q: "Vocês dão suporte depois que o projeto vai ao ar?",
+    a: "Sim. Seguimos com suporte, correções e novas funcionalidades — é o mesmo time que desenvolve e mantém o Catálogo Place, nosso próprio software em produção.",
+  },
+  {
+    q: "O código, o domínio e os acessos ficam com quem?",
+    a: "Com a sua empresa. Ao final do projeto você recebe os acessos e o código do que foi desenvolvido para você.",
+  },
+  {
+    q: "Vocês atendem empresas de que porte?",
+    a: "De quem está começando a operações já estabelecidas. O que muda é o escopo do projeto, não o nível de atenção.",
   },
   {
     q: "Dá para começar só com uma parte do projeto?",
-    a: "Sim. Muitos projetos começam pontuais — uma identidade, um site — e evoluem depois para uma parceria contínua de conteúdo e growth.",
+    a: "Sim. Muitos projetos começam pontuais — um site, uma identidade — e evoluem depois para um sistema, integrações ou um app.",
   },
 ];
 
