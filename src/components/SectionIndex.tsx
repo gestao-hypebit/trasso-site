@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 const SECTIONS = [
   { id: "topo", label: "Início" },
@@ -16,8 +17,11 @@ const SECTIONS = [
 /** A literal traço running down the side, marking where you are in the story. */
 export default function SectionIndex() {
   const [active, setActive] = useState("topo");
+  // As seções são da home; em landings (ex.: /site) o índice não aparece.
+  const naHome = usePathname() === "/";
 
   useEffect(() => {
+    if (!naHome) return;
     const elements = SECTIONS.map((s) => document.getElementById(s.id)).filter(
       (el): el is HTMLElement => el !== null
     );
@@ -34,7 +38,9 @@ export default function SectionIndex() {
 
     elements.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, []);
+  }, [naHome]);
+
+  if (!naHome) return null;
 
   return (
     <nav

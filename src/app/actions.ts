@@ -7,6 +7,8 @@ const CONTACT_TO = "gestao@trasso.com.br";
 /** Must be a verified sender in Resend. Falls back to their shared test address. */
 const CONTACT_FROM = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
 const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
+/** Formulários do administrativo que o site pode usar (landing /site usa o "landing-site"). */
+const FORMULARIOS_PERMITIDOS = new Set([FORM_SLUG, "landing-site"]);
 
 export type ContactState = {
   status: "idle" | "success" | "error";
@@ -34,19 +36,19 @@ function coletarValores(formData: FormData) {
  * Plano B: se o administrativo não responder, o lead chega por e-mail
  * para não se perder.
  */
-async function enviarPorEmail(valores: Record<string, string | string[]>) {
+async function enviarPorEmail(valores: Record<string, string | string[]>, extras: Record<string, string>) {
   if (!process.env.RESEND_API_KEY) return false;
   try {
     const nome = String(valores.nome ?? "Sem nome");
     const email = Object.values(valores).find((v) => typeof v === "string" && v.includes("@"));
-    const corpo = Object.entries(valores)
+    const corpo = Object.entries({ ...valores, ...extras })
       .map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(", ") : v}`)
       .join("\n");
     const { error } = await new Resend(process.env.RESEND_API_KEY).emails.send({
       from: `Site Trasso <${CONTACT_FROM}>`,
       to: CONTACT_TO,
       replyTo: typeof email === "string" ? email : undefined,
-      subject: `Novo projeto — ${nome} (administrativo fora do ar)`,
+      subject: `Novo projeto — ${nome}${extras.origem ? ` [${extras.origem}]` : ""} (administrativo fora do ar)`,
       text: corpo,
     });
     return !error;
@@ -70,13 +72,23 @@ export async function sendContactMessage(
     UTM_KEYS.map((k) => [k.replace("utm_", ""), String(formData.get(`_${k}`) ?? "")]).filter(([, v]) => v),
   );
 
-  const alvo = adminUrl(`/api/publico/formularios/${FORM_SLUG}`);
+  const pagina = String(formData.get("_pagina") ?? "");
+  const origem = String(formData.get("_origem") ?? "");
+  const pedido = String(formData.get("_formulario") ?? "");
+  const slug = FORMULARIOS_PERMITIDOS.has(pedido) ? pedido : FORM_SLUG;
+  // Só vão no e-mail de contingência; no administrativo já seguem em pagina/utm.
+  const extras: Record<string, string> = {};
+  if (origem) extras.origem = origem;
+  if (pagina) extras.pagina = pagina;
+  for (const [k, v] of Object.entries(utm)) extras[`utm_${k}`] = String(v);
+
+  const alvo = adminUrl(`/api/publico/formularios/${slug}`);
   if (alvo) {
     try {
       const res = await fetch(alvo.url, {
         method: "POST",
         headers: { ...alvo.headers, "content-type": "application/json" },
-        body: JSON.stringify({ valores, pagina: String(formData.get("_pagina") ?? ""), utm }),
+        body: JSON.stringify({ valores, pagina, origem: origem || undefined, utm }),
         cache: "no-store",
       });
       const data = (await res.json().catch(() => ({}))) as {
@@ -99,7 +111,7 @@ export async function sendContactMessage(
     console.error("TRASSO_ADMIN_URL/LEADS_API_KEY não configuradas — usando e-mail.");
   }
 
-  return (await enviarPorEmail(valores))
+  return (await enviarPorEmail(valores, extras))
     ? { status: "success", message: "Recebemos! A gente te responde em breve." }
     : ERRO_ENVIO;
 }

@@ -3,75 +3,11 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import Reveal from "./Reveal";
+import { SHOTS, type Shot } from "@/lib/cases";
 
 const INITIAL_COUNT = 6;
 const STEP = 6;
 const SPOTLIGHT_TAG = "Produto SaaS";
-
-const SHOTS = [
-  // {
-  //   title: "Mais Saúde",
-  //   tag: "Sistema para clínica médica",
-  //   gradient: "from-violeta/50 via-roxo-medio to-roxo-noite",
-  // },
-  {
-    title: "Maurício Nakahodo",
-    tag: "Site institucional",
-    gradient: "from-rosa/40 via-roxo-medio to-roxo-noite",
-    video: "/images/videonakahodo.mp4",
-    url: "https://www.mnakahodo.com.br/",
-  },
-  {
-    title: "Viável Planejamento Financeiro",
-    tag: "Site institucional",
-    gradient: "from-rosa/40 via-roxo-medio to-roxo-noite",
-    video: "/images/videoviavel.mp4",
-    url: "https://xn--vivelfinanaspessoais-jxb4l.com.br/",
-  },
-  {
-    title: "Enche o Bolso",
-    tag: "Landing Page",
-    gradient: "from-rosa/40 via-roxo-medio to-roxo-noite",
-    video: "/images/videoencheobolso.mp4",
-    url: "https://encheobolso.com.br/",
-  },
-  {
-    title: "Fluminous",
-    tag: "Site institucional",
-    gradient: "from-rosa/40 via-roxo-medio to-roxo-noite",
-    video: "/images/videofluminous.mp4",
-    url: "https://www.ffluminous.com.br/",
-  },
-  {
-    title: "Planejamento Com Propósito",
-    tag: "Site institucional",
-    gradient: "from-rosa/40 via-roxo-medio to-roxo-noite",
-    video: "/images/videoplanejamentocomproposito.mp4",
-    url: "https://planejamentocomproposito.com.br/",
-  },
-  {
-    title: "Identidade Visual - Mnakahodo",
-    tag: "Identidade visual",
-    gradient: "from-rosa/40 via-roxo-medio to-roxo-noite",
-    image: "/images/idvisualmnakahodo.jpg",
-    url: "https://www.mnakahodo.com.br/",
-  },
-
-  // {
-  //   title: "Maurício Nakahodo",
-  //   tag: "Identidade visual",
-  //   gradient: "from-lima/25 via-roxo-medio to-roxo-noite",
-  // },
-];
-
-type Shot = {
-  title: string;
-  tag: string;
-  gradient: string;
-  video?: string;
-  image?: string;
-  url?: string;
-};
 
 const SPOTLIGHT_POINTS = [
   "Produto, design e código feitos pela Trasso",

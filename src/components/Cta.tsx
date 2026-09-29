@@ -3,6 +3,7 @@
 import { useActionState, useState, startTransition, type FormEvent } from "react";
 import { sendContactMessage, type ContactState } from "@/app/actions";
 import type { Campo, FormularioPublico } from "@/lib/formulario";
+import { mascaraTelefone } from "@/lib/telefone";
 import { whatsappUrl } from "@/lib/whatsapp";
 import { DoodleCircle, DoodleDots } from "./Doodles";
 import Magnetic from "./Magnetic";
@@ -14,15 +15,6 @@ const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_c
 const labelClass = "mb-2 block text-xs font-semibold tracking-wide text-nevoa/40 uppercase";
 const inputClass =
   "w-full border-b border-white/15 bg-transparent py-3 text-xl font-semibold text-nevoa placeholder:font-normal placeholder:text-nevoa/25 outline-none transition-colors focus:border-lima aria-invalid:border-rosa";
-
-/** (11) 91234-5678 enquanto digita. */
-function mascaraTelefone(valor: string) {
-  const d = valor.replace(/\D/g, "").slice(0, 11);
-  if (d.length <= 2) return d.length ? `(${d}` : "";
-  if (d.length <= 6) return `(${d.slice(0, 2)}) ${d.slice(2)}`;
-  if (d.length <= 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
-  return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
-}
 
 function CampoInput({ campo, erro, onChange }: { campo: Campo; erro?: string; onChange: () => void }) {
   const id = `campo-${campo.chave}`;
