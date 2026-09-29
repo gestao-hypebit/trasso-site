@@ -42,6 +42,37 @@ export function LandingHeader() {
   );
 }
 
+/** Moldura de navegador com a tela de um site (recortes em public/images/telas). */
+function JanelaNavegador({
+  src,
+  dominio,
+  priority,
+  className = "",
+}: {
+  src: string;
+  dominio: string;
+  priority?: boolean;
+  className?: string;
+}) {
+  return (
+    <div
+      className={`overflow-hidden rounded-xl border border-white/15 bg-roxo-medio shadow-[0_30px_80px_rgba(0,0,0,0.5)] ${className}`}
+    >
+      <div className="flex items-center gap-3 border-b border-white/10 px-3 py-2.5">
+        <div className="flex gap-1.5">
+          <span className="h-2.5 w-2.5 rounded-full bg-rosa" />
+          <span className="h-2.5 w-2.5 rounded-full bg-lima" />
+          <span className="h-2.5 w-2.5 rounded-full bg-nevoa/70" />
+        </div>
+        <span className="flex-1 truncate rounded-full bg-white/10 px-3 py-1 text-center text-[11px] text-nevoa/70">
+          {dominio}
+        </span>
+      </div>
+      <Image src={src} alt="" width={606} height={312} priority={priority} className="block h-auto w-full" />
+    </div>
+  );
+}
+
 export function LandingHero() {
   return (
     <section className="relative overflow-hidden pt-12 pb-20 sm:pt-20 sm:pb-28">
@@ -99,23 +130,22 @@ export function LandingHero() {
           </div>
         </div>
 
-        {/* Prévia estática dos cases (só desktop): leve, sem vídeo acima da dobra. */}
-        <div className="relative hidden h-[480px] lg:block" aria-hidden="true">
-          <Image
-            src="/images/posters/nakahodo.jpg"
-            alt=""
-            width={720}
-            height={1280}
+        {/* Telas de cases reais em janelas de navegador: imagem estática, sem vídeo acima da dobra. */}
+        <div className="fade-up relative lg:pt-16 lg:pb-10" aria-hidden="true">
+          <JanelaNavegador
+            src="/images/telas/fluminous.jpg"
+            dominio="ffluminous.com.br"
+            className="absolute top-0 right-0 hidden w-[80%] opacity-70 lg:block"
+          />
+          <JanelaNavegador
+            src="/images/telas/nakahodo.jpg"
+            dominio="mnakahodo.com.br"
             priority
-            className="absolute top-6 left-0 w-[58%] -rotate-6 rounded-2xl border border-white/10 shadow-2xl"
+            className="relative w-full lg:w-[88%]"
           />
-          <Image
-            src="/images/posters/viavel.jpg"
-            alt=""
-            width={720}
-            height={1280}
-            className="absolute top-0 right-0 w-[58%] rotate-3 rounded-2xl border border-white/10 shadow-2xl"
-          />
+          <p className="absolute -bottom-4 right-4 flex items-center gap-2 rounded-full bg-lima px-4 py-2 text-sm font-bold text-roxo-noite shadow-[0_8px_30px_rgba(0,0,0,0.35)] lg:right-0 lg:bottom-2">
+            <span aria-hidden="true">✓</span> Feito pela Trasso
+          </p>
         </div>
       </div>
     </section>
