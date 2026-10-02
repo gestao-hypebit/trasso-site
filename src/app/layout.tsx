@@ -1,10 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Permanent_Marker } from "next/font/google";
 import "./globals.css";
-import Grain from "@/components/Grain";
-import ScrollProgress from "@/components/ScrollProgress";
-import TracoCursor from "@/components/TracoCursor";
-import SectionIndex from "@/components/SectionIndex";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -126,10 +122,6 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <ScrollProgress />
-        <TracoCursor />
-        <SectionIndex />
-        <Grain />
         {children}
       </body>
     </html>

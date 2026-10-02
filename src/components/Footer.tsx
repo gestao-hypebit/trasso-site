@@ -1,47 +1,81 @@
-import Image from "next/image";
 import Logo from "./Logo";
+import { whatsappUrl } from "@/lib/whatsapp";
+
+const SERVICOS = [
+  "Sites e landing pages",
+  "Sistemas e plataformas web",
+  "Aplicativos",
+  "Identidade visual",
+  "Integrações e automação",
+];
+
+const NAVEGACAO = [
+  { href: "#servicos", label: "Serviços" },
+  { href: "#trabalhos", label: "Trabalhos" },
+  { href: "#catalogo-place", label: "Catálogo Place" },
+  { href: "#processo", label: "Como trabalhamos" },
+  { href: "#faq", label: "Dúvidas" },
+];
+
+const titulo = "mb-5 text-xs font-semibold tracking-[0.18em] text-nevoa/40 uppercase";
+const link = "text-sm text-nevoa/65 transition-colors hover:text-lima";
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-preto pt-24 pb-10">
-      <Image
-        src="/images/cropped/logo-nevoa.png"
-        alt=""
-        aria-hidden="true"
-        width={752}
-        height={257}
-        className="pointer-events-none absolute -left-6 top-6 w-[70vw] max-w-3xl opacity-[0.035] sm:w-[45vw]"
-      />
-
-      <div className="relative mx-auto flex max-w-7xl flex-col gap-8 px-6 sm:flex-row sm:items-end sm:justify-between lg:px-10">
+    <footer className="border-t border-white/[0.08] bg-[#12022a] pt-20 pb-10">
+      <div className="mx-auto grid max-w-7xl gap-12 px-6 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:px-10">
         <div>
           <Logo />
-          <p className="mt-3 max-w-xs text-sm text-nevoa/40">
-            Criatividade e tecnologia no mesmo traço.
+          <p className="mt-5 max-w-xs text-sm leading-relaxed text-nevoa/50">
+            Agência de design e tecnologia. Sites, sistemas, apps e identidades visuais para empresas de todo o Brasil.
           </p>
         </div>
 
-        <nav className="flex flex-wrap gap-x-8 gap-y-2 text-sm text-nevoa/55">
-          <a href="#sobre" className="hover:text-lima">Sobre</a>
-          <a href="#servicos" className="hover:text-lima">Serviços</a>
-          <a href="#clientes" className="hover:text-lima">Clientes</a>
-          <a href="#trabalhos" className="hover:text-lima">Trabalhos</a>
-          <a href="#faq" className="hover:text-lima">FAQ</a>
-          <a href="#contato" className="hover:text-lima">Contato</a>
-        </nav>
+        <div>
+          <p className={titulo}>Serviços</p>
+          <ul className="flex flex-col gap-3">
+            {SERVICOS.map((s) => (
+              <li key={s}>
+                <a href="#servicos" className={link}>{s}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-        <div className="flex items-center gap-6 text-sm text-nevoa/55">
-          <a href="https://instagram.com/_agenciatrasso" target="_blank" rel="noreferrer" className="hover:text-lima">
-            Instagram
-          </a>
-          <a href="mailto:gestao@trasso.com.br" className="hover:text-lima">
-            E-mail
-          </a>
+        <div>
+          <p className={titulo}>Navegação</p>
+          <ul className="flex flex-col gap-3">
+            {NAVEGACAO.map((n) => (
+              <li key={n.href}>
+                <a href={n.href} className={link}>{n.label}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <p className={titulo}>Contato</p>
+          <ul className="flex flex-col gap-3">
+            {whatsappUrl && (
+              <li>
+                <a href={whatsappUrl} target="_blank" rel="noreferrer" className={link}>WhatsApp</a>
+              </li>
+            )}
+            <li>
+              <a href="mailto:gestao@trasso.com.br" className={link}>gestao@trasso.com.br</a>
+            </li>
+            <li>
+              <a href="https://instagram.com/_agenciatrasso" target="_blank" rel="noreferrer" className={link}>
+                Instagram @_agenciatrasso
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
 
-      <div className="relative mx-auto mt-10 max-w-7xl border-t border-white/10 px-6 pt-6 text-xs text-nevoa/30 lg:px-10">
-        Trasso — Agência criativa · Desde 2026
+      <div className="mx-auto mt-16 flex max-w-7xl flex-wrap items-center justify-between gap-4 border-t border-white/[0.06] px-6 pt-8 text-xs text-nevoa/35 lg:px-10">
+        <p>© {new Date().getFullYear()} Trasso. Criatividade e tecnologia no mesmo traço.</p>
+        <a href="#topo" className="hover:text-nevoa">Voltar ao topo ↑</a>
       </div>
     </footer>
   );

@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import LandingFaq from "@/components/landing/Faq";
 import LeadForm from "@/components/landing/LeadForm";
 import MetaPixel from "@/components/landing/MetaPixel";
+import Grain from "@/components/Grain";
+import ScrollProgress from "@/components/ScrollProgress";
+import TracoCursor from "@/components/TracoCursor";
+import SectionIndex from "@/components/SectionIndex";
 import Portfolio from "@/components/landing/Portfolio";
 import {
   LandingFooter,
@@ -41,6 +45,11 @@ export const metadata: Metadata = {
 export default function SiteLanding() {
   return (
     <>
+      {/* Efeitos que antes ficavam no layout raiz; a home nova não usa. */}
+      <ScrollProgress />
+      <TracoCursor />
+      <SectionIndex />
+      <Grain />
       <MetaPixel />
       <LandingHeader />
       <main>

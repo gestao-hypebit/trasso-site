@@ -1,66 +1,50 @@
-import { DoodleArrow } from "./Doodles";
 import Reveal from "./Reveal";
 
-const STEPS = [
+// As etapas são uma sequência real — daí a numeração.
+const ETAPAS = [
   {
-    n: "01",
-    title: "Escuta",
-    description:
-      "Mergulhamos no seu negócio, público e contexto antes de propor qualquer solução.",
+    titulo: "Conversa",
+    descricao: "Uma chamada de 30 minutos para entender seu negócio, seu público e o que precisa sair do papel.",
   },
   {
-    n: "02",
-    title: "Estratégia",
-    description:
-      "Direção clara: posicionamento, mensagem e prioridades que orientam tudo o que vem depois.",
+    titulo: "Proposta",
+    descricao: "Você recebe escopo, prazo e valor fechados antes de começar. Sem letra miúda.",
   },
   {
-    n: "03",
-    title: "Criação",
-    description:
-      "Identidade, conteúdo e produto ganham forma com um traço só, do conceito ao pixel.",
+    titulo: "Criação e desenvolvimento",
+    descricao: "Design e código feitos pelo mesmo time, com a sua aprovação em cada etapa.",
   },
   {
-    n: "04",
-    title: "Entrega & Impacto",
-    description:
-      'Lançamos, medimos e ajustamos. O trabalho continua depois do "no ar".',
+    titulo: "Publicação e suporte",
+    descricao: "Colocamos no ar com domínio e segurança configurados e seguimos com suporte e melhorias.",
   },
 ];
 
 export default function Process() {
   return (
-    <section id="processo" className="relative overflow-hidden bg-roxo-noite py-28 sm:py-40">
-      <DoodleArrow className="pointer-events-none absolute right-[6%] top-16 hidden h-10 w-16 -rotate-12 text-lima/25 lg:block" />
-
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
-        <Reveal className="mb-20 max-w-2xl">
-          <p className="eyebrow mb-5 text-violeta">Como trabalhamos</p>
-          <h2 className="text-4xl font-black leading-[1.05] tracking-tight text-nevoa text-balance sm:text-5xl lg:text-6xl">
-            Um processo com <span className="text-violeta">direção</span>. Do
-            primeiro <span className="text-lima">traço</span> à entrega.
-          </h2>
+    <section id="processo" className="border-t border-white/[0.06] bg-roxo-noite py-28 sm:py-36">
+      <div className="mx-auto grid max-w-7xl gap-14 px-6 lg:grid-cols-[1fr_1.2fr] lg:gap-20 lg:px-10">
+        <Reveal className="lg:sticky lg:top-32 lg:self-start">
+          <p className="rotulo mb-5">Como trabalhamos</p>
+          <h2 className="titulo-secao">Da primeira conversa ao site no ar.</h2>
+          <p className="mt-5 max-w-md text-base leading-relaxed text-nevoa/60">
+            Um processo direto, com prazos combinados e você acompanhando cada etapa — sem sumir no meio do caminho.
+          </p>
         </Reveal>
 
-        <div className="relative grid gap-12 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-          <div
-            className="absolute top-6 right-0 left-0 hidden h-px bg-gradient-to-r from-violeta via-lima to-rosa opacity-30 lg:block"
-            aria-hidden="true"
-          />
-          {STEPS.map((step, i) => (
-            <Reveal key={step.n} delay={i * 0.1}>
-              <span className="relative z-10 mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-roxo-medio font-marker text-sm text-lima">
-                {step.n}
-              </span>
-              <h3 className="mb-2 text-lg font-bold text-nevoa">
-                {step.title}
-              </h3>
-              <p className="text-sm leading-relaxed text-nevoa/55">
-                {step.description}
-              </p>
-            </Reveal>
+        <ol className="border-b border-white/[0.08]">
+          {ETAPAS.map((etapa, i) => (
+            <li key={etapa.titulo} className="border-t border-white/[0.08]">
+              <Reveal delay={i * 0.06} className="grid grid-cols-[3rem_1fr] gap-4 py-8 sm:grid-cols-[4rem_1fr]">
+                <span className="pt-0.5 text-sm font-bold text-lima tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3 className="text-lg font-bold text-nevoa sm:text-xl">{etapa.titulo}</h3>
+                  <p className="mt-2 max-w-lg text-[15px] leading-relaxed text-nevoa/60">{etapa.descricao}</p>
+                </div>
+              </Reveal>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );

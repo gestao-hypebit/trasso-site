@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DoodleSpiral } from "./Doodles";
+import Reveal from "./Reveal";
 
 const ITEMS = [
   {
@@ -38,39 +38,35 @@ export default function Faq() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="relative overflow-hidden bg-roxo-noite py-28 sm:py-40">
-      <DoodleSpiral className="pointer-events-none absolute right-[10%] top-20 hidden h-14 w-14 text-rosa/20 lg:block" />
+    <section id="faq" className="border-t border-white/[0.06] bg-roxo-noite py-28 sm:py-36">
+      <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[1fr_1.4fr] lg:gap-20 lg:px-10">
+        <Reveal className="lg:sticky lg:top-32 lg:self-start">
+          <p className="rotulo mb-5">Dúvidas</p>
+          <h2 className="titulo-secao">Perguntas antes de começar.</h2>
+          <p className="mt-5 max-w-sm text-base leading-relaxed text-nevoa/60">
+            Não achou o que procurava?{" "}
+            <a href="#contato" className="font-semibold text-nevoa underline decoration-lima/60 underline-offset-4 hover:text-lima">
+              Fale com a gente
+            </a>
+            .
+          </p>
+        </Reveal>
 
-      <div className="mx-auto max-w-4xl px-6 lg:px-10">
-        <div className="mb-16 max-w-2xl">
-          <p className="eyebrow mb-5 text-violeta">Perguntas frequentes</p>
-          <h2 className="text-4xl font-black leading-[1.05] tracking-tight text-nevoa text-balance sm:text-5xl">
-            Dúvidas antes de <span className="text-violeta">começar</span>?
-          </h2>
-        </div>
-
-        <div className="flex flex-col gap-3">
+        <div className="border-b border-white/[0.08]">
           {ITEMS.map((item, i) => {
             const isOpen = open === i;
             return (
-              <div
-                key={item.q}
-                className={`rounded-2xl px-6 transition-colors duration-300 ${
-                  isOpen ? "bg-roxo-medio" : "bg-roxo-medio/30"
-                }`}
-              >
+              <div key={item.q} className="border-t border-white/[0.08]">
                 <button
                   type="button"
                   onClick={() => setOpen(isOpen ? null : i)}
                   aria-expanded={isOpen}
                   className="flex w-full items-center justify-between gap-6 py-6 text-left"
                 >
-                  <span className="text-base font-semibold text-nevoa sm:text-lg">
-                    {item.q}
-                  </span>
+                  <span className="text-base font-semibold text-nevoa sm:text-lg">{item.q}</span>
                   <span
-                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-lima/40 text-lima transition-transform duration-300 ${
-                      isOpen ? "rotate-45" : ""
+                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-lg leading-none transition-all duration-300 ${
+                      isOpen ? "rotate-45 border-lima bg-lima text-roxo-noite" : "border-white/20 text-nevoa/70"
                     }`}
                     aria-hidden="true"
                   >
@@ -79,14 +75,10 @@ export default function Faq() {
                 </button>
                 <div
                   className="grid overflow-hidden transition-[grid-template-rows] duration-400 ease-out"
-                  style={{
-                    gridTemplateRows: isOpen ? "1fr" : "0fr",
-                  }}
+                  style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
                 >
                   <div className="min-h-0">
-                    <p className="max-w-2xl pb-6 text-sm leading-relaxed text-nevoa/55 sm:text-base">
-                      {item.a}
-                    </p>
+                    <p className="max-w-2xl pb-7 text-[15px] leading-relaxed text-nevoa/60 sm:text-base">{item.a}</p>
                   </div>
                 </div>
               </div>
