@@ -1,6 +1,5 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import Clients from "@/components/Clients";
 import Services from "@/components/Services";
 import CatalogoPlace from "@/components/CatalogoPlace";
 import Work from "@/components/Work";
@@ -22,7 +21,6 @@ export default async function Home() {
       <Navbar />
       <main>
         <Hero />
-        <Clients />
         <Services />
         <CatalogoPlace />
         <Work />
