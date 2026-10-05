@@ -18,9 +18,9 @@ export default function LandingFaq() {
     <section className="py-20 sm:py-28">
       <div className="mx-auto max-w-3xl px-5 sm:px-8">
         <div className="mb-10 sm:mb-14">
-          <p className="eyebrow mb-4 text-lima">Perguntas frequentes</p>
+          <p className="eyebrow mb-4 text-rosa">Perguntas frequentes</p>
           <h2 className="text-3xl leading-[1.08] font-black tracking-tight text-nevoa text-balance sm:text-5xl">
-            Dúvidas antes de <span className="text-lima">começar</span>?
+            Dúvidas antes de <span className="text-rosa">começar</span>?
           </h2>
         </div>
 
@@ -45,7 +45,7 @@ export default function LandingFaq() {
                   >
                     <span className="text-base font-semibold text-nevoa sm:text-lg">{item.q}</span>
                     <span
-                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-lima/40 text-lima transition-transform duration-300 ${
+                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-rosa/40 text-rosa transition-transform duration-300 ${
                         isOpen ? "rotate-45" : ""
                       }`}
                       aria-hidden="true"

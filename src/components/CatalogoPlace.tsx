@@ -23,7 +23,7 @@ export default function CatalogoPlace() {
               <h2 className="titulo-secao mt-6">A gente também cria e mantém o nosso próprio software.</h2>
               <p className="mt-5 max-w-lg text-base leading-relaxed text-nevoa/65 sm:text-lg">
                 O <span className="font-semibold text-nevoa">Catálogo Place</span> é uma plataforma de catálogo online com
-                pedidos pelo WhatsApp. Design, código e suporte são da Trasso — o mesmo time que vai cuidar do seu projeto.
+                pedidos pelo WhatsApp. Design, código e suporte são da Slick — o mesmo time que vai cuidar do seu projeto.
               </p>
 
               <dl className="mt-10 grid max-w-sm grid-cols-2 gap-6 border-t border-white/[0.08] pt-8">
@@ -40,7 +40,7 @@ export default function CatalogoPlace() {
                 href="https://www.catalogoplace.com.br/"
                 target="_blank"
                 rel="noreferrer"
-                className="group mt-10 inline-flex items-center gap-2 text-sm font-semibold text-nevoa hover:text-lima"
+                className="group mt-10 inline-flex items-center gap-2 text-sm font-semibold text-nevoa hover:text-rosa"
               >
                 Conhecer o Catálogo Place
                 <IconeSeta className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

@@ -119,7 +119,7 @@ export function DoodleSpiral({ className = "" }: DoodleProps) {
   );
 }
 
-/** A single confident marker stroke — the literal "traço". */
+/** A single confident marker stroke. */
 export function DoodleStroke({ className = "" }: DoodleProps) {
   return (
     <svg

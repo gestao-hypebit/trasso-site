@@ -15,17 +15,17 @@ const marker = Permanent_Marker({
   display: "swap",
 });
 
-const SITE_URL = "https://trasso.com.br";
-const SITE_NAME = "Trasso";
-const TITLE = "Trasso — Criatividade e tecnologia no mesmo traço";
+const SITE_URL = "https://slick.com.br";
+const SITE_NAME = "Slick";
+const TITLE = "Slick — Criatividade e tecnologia, sem atrito";
 const DESCRIPTION =
-  "A Trasso é uma agência criativa que une estratégia, criatividade e tecnologia em um único movimento: identidade de marca, sites, produtos digitais, apps e automação. Cada projeto começa com um traço.";
+  "A Slick é uma agência criativa que une estratégia, design e tecnologia: identidade de marca, sites, sistemas, apps e automação. Da ideia ao ar, sem atrito.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: TITLE,
-    template: "%s — Trasso",
+    template: "%s — Slick",
   },
   description: DESCRIPTION,
   keywords: [
@@ -39,9 +39,9 @@ export const metadata: Metadata = {
     "automação e integração de sistemas",
     "agência digital",
   ],
-  authors: [{ name: "Trasso", url: SITE_URL }],
-  creator: "Trasso",
-  publisher: "Trasso",
+  authors: [{ name: "Slick", url: SITE_URL }],
+  creator: "Slick",
+  publisher: "Slick",
   applicationName: SITE_NAME,
   category: "business",
   alternates: {
@@ -85,14 +85,14 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: SITE_NAME,
-  legalName: "Trasso",
+  legalName: "Slick",
   url: SITE_URL,
-  logo: `${SITE_URL}/images/cropped/monogram-ss-lima.png`,
+  logo: `${SITE_URL}/images/slick/logo-roxo.png`,
   image: `${SITE_URL}/opengraph-image`,
   description: DESCRIPTION,
-  slogan: "Criatividade e tecnologia no mesmo traço",
-  email: "gestao@trasso.com.br",
-  sameAs: ["https://instagram.com/_agenciatrasso"],
+  slogan: "Criatividade e tecnologia, sem atrito",
+  email: "gestao@slick.com.br",
+  sameAs: ["https://instagram.com/_agenciaslick"],
   address: {
     "@type": "PostalAddress",
     addressCountry: "BR",

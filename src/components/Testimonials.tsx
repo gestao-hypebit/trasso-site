@@ -10,7 +10,7 @@ import { AnimatePresence, motion } from "framer-motion";
 const QUOTES = [
   {
     quote:
-      "A Trasso trouxe direção pra algo que a gente sabia que precisava, mas não conseguia nomear. Em poucas semanas tínhamos uma marca que finalmente parecia a gente.",
+      "A Slick trouxe direção pra algo que a gente sabia que precisava, mas não conseguia nomear. Em poucas semanas tínhamos uma marca que finalmente parecia a gente.",
     role: "Fundadora, fintech B2B",
     initials: "F.",
     accent: "bg-violeta",
@@ -24,7 +24,7 @@ const QUOTES = [
   },
   {
     quote:
-      "Trabalhar com a Trasso é rápido sem parecer apressado. Cada decisão vinha com justificativa clara.",
+      "Trabalhar com a Slick é rápido sem parecer apressado. Cada decisão vinha com justificativa clara.",
     role: "Sócio, e-commerce de moda",
     initials: "S.",
     accent: "bg-roxo-noite",

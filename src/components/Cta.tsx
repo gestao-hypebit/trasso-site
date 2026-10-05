@@ -47,7 +47,7 @@ function CampoInput({ campo, erro, onChange }: { campo: Campo; erro?: string; on
           {(campo.opcoes ?? []).map((opcao) => (
             <label
               key={opcao}
-              className="cursor-pointer rounded-full border border-white/15 px-3.5 py-1.5 text-sm font-medium text-nevoa/70 transition-colors select-none hover:border-nevoa/40 hover:text-nevoa has-checked:border-lima has-checked:bg-lima has-checked:text-roxo-noite has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-lima"
+              className="cursor-pointer rounded-full border border-white/15 px-3.5 py-1.5 text-sm font-medium text-nevoa/70 transition-colors select-none hover:border-nevoa/40 hover:text-nevoa has-checked:border-rosa has-checked:bg-rosa has-checked:text-roxo-noite has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-rosa"
             >
               <input
                 type={multipla ? "checkbox" : "radio"}
@@ -160,7 +160,7 @@ export default function Cta({ formulario }: { formulario: FormularioPublico | nu
         <Reveal className={formulario ? "lg:sticky lg:top-32 lg:self-start" : ""}>
           <p className={`rotulo mb-6 ${formulario ? "" : "justify-center"}`}>Contato</p>
           <h2 className="text-4xl leading-[1.02] font-extrabold tracking-[-0.04em] text-balance text-nevoa sm:text-5xl lg:text-6xl">
-            Vamos tirar seu projeto do <Traco delay={0.3}><span className="text-lima">papel</span></Traco>?
+            Vamos tirar seu projeto do <Traco delay={0.3}><span className="text-rosa">papel</span></Traco>?
           </h2>
           <p className={`mt-6 max-w-md text-base leading-relaxed text-nevoa/65 sm:text-lg ${formulario ? "" : "mx-auto"}`}>
             {formulario?.subtitulo ??
@@ -173,17 +173,17 @@ export default function Cta({ formulario }: { formulario: FormularioPublico | nu
                 href={whatsappUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2.5 rounded-full bg-lima px-7 py-3.5 text-sm font-bold text-roxo-noite transition-transform duration-300 hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2.5 rounded-full bg-rosa px-7 py-3.5 text-sm font-bold text-roxo-noite transition-transform duration-300 hover:-translate-y-0.5"
               >
                 <WhatsAppIcon className="h-5 w-5" />
                 Conversar pelo WhatsApp
               </a>
             )}
             <a
-              href="mailto:gestao@trasso.com.br"
-              className="text-sm font-semibold text-nevoa/70 underline decoration-white/20 underline-offset-4 hover:text-nevoa hover:decoration-lima"
+              href="mailto:gestao@slick.com.br"
+              className="text-sm font-semibold text-nevoa/70 underline decoration-white/20 underline-offset-4 hover:text-nevoa hover:decoration-rosa"
             >
-              gestao@trasso.com.br
+              gestao@slick.com.br
             </a>
           </div>
         </Reveal>
@@ -193,14 +193,14 @@ export default function Cta({ formulario }: { formulario: FormularioPublico | nu
             <div className="rounded-3xl border border-white/[0.08] bg-roxo-medio/40 p-7 sm:p-10">
               {enviado ? (
                 <div role="status" className="py-10 text-center">
-                  <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-lima text-2xl font-bold text-roxo-noite" aria-hidden="true">
+                  <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-rosa text-2xl font-bold text-roxo-noite" aria-hidden="true">
                     ✓
                   </span>
                   <p className="mt-6 text-2xl font-extrabold text-nevoa">{state.message}</p>
                   <button
                     type="button"
                     onClick={() => setEnviado(false)}
-                    className="mt-6 border-b border-nevoa/30 text-sm font-semibold text-nevoa/60 hover:border-lima hover:text-nevoa"
+                    className="mt-6 border-b border-nevoa/30 text-sm font-semibold text-nevoa/60 hover:border-rosa hover:text-nevoa"
                   >
                     Enviar outra mensagem
                   </button>
@@ -225,7 +225,7 @@ export default function Cta({ formulario }: { formulario: FormularioPublico | nu
                   <button
                     type="submit"
                     disabled={pending}
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-lima/70 px-8 py-3.5 text-sm font-bold text-lima transition-colors hover:bg-lima hover:text-roxo-noite disabled:cursor-not-allowed disabled:opacity-60 sm:col-span-2 sm:justify-self-start"
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-rosa/70 px-8 py-3.5 text-sm font-bold text-rosa transition-colors hover:bg-rosa hover:text-roxo-noite disabled:cursor-not-allowed disabled:opacity-60 sm:col-span-2 sm:justify-self-start"
                   >
                     {pending ? "Enviando…" : formulario.botao_texto}
                     <span aria-hidden="true">→</span>

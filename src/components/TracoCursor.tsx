@@ -2,12 +2,12 @@
 
 import { useEffect, useRef } from "react";
 
-const COLORS = ["#a8f300", "#ff358d", "#7c3aed"];
+const COLORS = ["#ff358d", "#7c3aed", "#ff358d", "#a8f300"];
 const MAX_AGE = 650;
 
 /**
- * The pointer literally draws a traço as it moves — the brand's core idea
- * ("cada projeto começa com um traço") made into an interactive signature.
+ * The pointer leaves a smooth, fading trail as it moves — a small
+ * interactive signature of the brand's "sem atrito" feel.
  * Desktop only; respects prefers-reduced-motion.
  */
 export default function TracoCursor() {

@@ -70,7 +70,7 @@ function CaseCard({ item, n }: { item: Shot; n: number }) {
           {item.tag}
         </span>
         <h3 className="max-w-[85%] text-xl font-bold text-nevoa sm:text-2xl">{item.title}</h3>
-        <span className="mt-3 flex items-center gap-2 text-sm font-semibold text-lima transition-all duration-300 sm:opacity-0 sm:group-hover:opacity-100">
+        <span className="mt-3 flex items-center gap-2 text-sm font-semibold text-rosa transition-all duration-300 sm:opacity-0 sm:group-hover:opacity-100">
           Ver no ar
           <span className="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">
             ↗
@@ -87,18 +87,18 @@ function CardProximo() {
   return (
     <a
       href="#formulario"
-      className="group relative flex aspect-3/4 flex-col justify-end overflow-hidden rounded-2xl border border-dashed border-lima/40 bg-lima/5 p-7 transition-colors hover:border-lima hover:bg-lima/10 sm:p-8"
+      className="group relative flex aspect-3/4 flex-col justify-end overflow-hidden rounded-2xl border border-dashed border-rosa/40 bg-rosa/5 p-7 transition-colors hover:border-rosa hover:bg-rosa/10 sm:p-8"
     >
       <span aria-hidden="true" className="ghost-num absolute -top-3 right-3 text-6xl sm:text-7xl">
         {String(CASES.length + 1).padStart(2, "0")}
       </span>
-      <span className="mb-3 w-fit rounded-full border border-lima/40 px-3 py-1 text-[11px] font-semibold tracking-wider text-lima uppercase">
+      <span className="mb-3 w-fit rounded-full border border-rosa/40 px-3 py-1 text-[11px] font-semibold tracking-wider text-rosa uppercase">
         Próximo case
       </span>
       <h3 className="text-xl font-bold text-nevoa sm:text-2xl">
-        O site do <span className="text-lima">seu negócio</span>
+        O site do <span className="text-rosa">seu negócio</span>
       </h3>
-      <span className="mt-3 flex items-center gap-2 text-sm font-semibold text-lima">
+      <span className="mt-3 flex items-center gap-2 text-sm font-semibold text-rosa">
         Quero meu site
         <span className="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">
           →
@@ -113,9 +113,9 @@ export default function Portfolio() {
     <section id="portfolio" className="py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <Reveal className="mb-10 max-w-2xl sm:mb-14">
-          <p className="eyebrow mb-4 text-lima">Portfólio</p>
+          <p className="eyebrow mb-4 text-rosa">Portfólio</p>
           <h2 className="text-3xl leading-[1.08] font-black tracking-tight text-nevoa text-balance sm:text-5xl">
-            Sites que já <span className="text-lima">colocamos no ar</span>.
+            Sites que já <span className="text-rosa">colocamos no ar</span>.
           </h2>
         </Reveal>
 

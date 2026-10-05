@@ -2,10 +2,10 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Trasso — Criatividade e tecnologia no mesmo traço",
-    short_name: "Trasso",
+    name: "Slick — Criatividade e tecnologia, sem atrito",
+    short_name: "Slick",
     description:
-      "A Trasso é uma agência criativa que une estratégia, criatividade e tecnologia em um único movimento.",
+      "A Slick é uma agência criativa que une estratégia, design e tecnologia — da ideia ao ar, sem atrito.",
     start_url: "/",
     display: "standalone",
     background_color: "#1a0533",

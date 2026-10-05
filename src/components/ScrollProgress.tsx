@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useSpring } from "framer-motion";
 
-/** Thin lima traço at the very top of the viewport, tracking scroll position. */
+/** Thin rosa line at the very top of the viewport, tracking scroll position. */
 export default function ScrollProgress() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -14,7 +14,7 @@ export default function ScrollProgress() {
   return (
     <motion.div
       style={{ scaleX }}
-      className="fixed inset-x-0 top-0 z-[70] h-[2.5px] origin-left bg-lima"
+      className="fixed inset-x-0 top-0 z-[70] h-[2.5px] origin-left bg-rosa"
       aria-hidden="true"
     />
   );

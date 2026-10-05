@@ -25,21 +25,21 @@ export default function Hero() {
             className="fade-up text-[2.75rem] leading-[1] font-extrabold tracking-[-0.045em] text-balance text-nevoa sm:text-6xl lg:text-[4.6rem]"
             style={{ animationDelay: "0.08s" }}
           >
-            Do primeiro traço ao seu negócio <Traco delay={0.7}><span className="text-lima">no ar</span></Traco>.
+            Da primeira ideia ao seu negócio <Traco delay={0.7}><span className="text-rosa">no ar</span></Traco>.
           </h1>
 
           <p
             className="fade-up mt-7 max-w-xl text-lg leading-relaxed text-nevoa/65"
             style={{ animationDelay: "0.18s" }}
           >
-            A Trasso cria sites, sistemas web, apps e identidades visuais sob medida para empresas de todo
+            A Slick cria sites, sistemas web, apps e identidades visuais sob medida para empresas de todo
             o Brasil — com estratégia, design e código no mesmo time.
           </p>
 
           <div className="fade-up mt-10 flex flex-wrap items-center gap-3" style={{ animationDelay: "0.28s" }}>
             <a
               href="#contato"
-              className="group inline-flex items-center gap-2 rounded-full bg-lima px-7 py-3.5 text-sm font-bold text-roxo-noite transition-transform duration-300 hover:-translate-y-0.5"
+              className="group inline-flex items-center gap-2 rounded-full bg-rosa px-7 py-3.5 text-sm font-bold text-roxo-noite transition-transform duration-300 hover:-translate-y-0.5"
             >
               Pedir orçamento
               <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>

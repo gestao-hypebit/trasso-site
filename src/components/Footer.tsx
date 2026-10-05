@@ -18,7 +18,7 @@ const NAVEGACAO = [
 ];
 
 const titulo = "mb-5 text-xs font-semibold tracking-[0.18em] text-nevoa/40 uppercase";
-const link = "text-sm text-nevoa/65 transition-colors hover:text-lima";
+const link = "text-sm text-nevoa/65 transition-colors hover:text-rosa";
 
 export default function Footer() {
   return (
@@ -62,11 +62,11 @@ export default function Footer() {
               </li>
             )}
             <li>
-              <a href="mailto:gestao@trasso.com.br" className={link}>gestao@trasso.com.br</a>
+              <a href="mailto:gestao@slick.com.br" className={link}>gestao@slick.com.br</a>
             </li>
             <li>
-              <a href="https://instagram.com/_agenciatrasso" target="_blank" rel="noreferrer" className={link}>
-                Instagram @_agenciatrasso
+              <a href="https://instagram.com/_agenciaslick" target="_blank" rel="noreferrer" className={link}>
+                Instagram @_agenciaslick
               </a>
             </li>
           </ul>
@@ -74,7 +74,7 @@ export default function Footer() {
       </div>
 
       <div className="mx-auto mt-16 flex max-w-7xl flex-wrap items-center justify-between gap-4 border-t border-white/[0.06] px-6 pt-8 text-xs text-nevoa/35 lg:px-10">
-        <p>© {new Date().getFullYear()} Trasso. Criatividade e tecnologia no mesmo traço.</p>
+        <p>© {new Date().getFullYear()} Slick. Criatividade e tecnologia, sem atrito.</p>
         <a href="#topo" className="hover:text-nevoa">Voltar ao topo ↑</a>
       </div>
     </footer>

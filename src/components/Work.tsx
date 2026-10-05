@@ -36,7 +36,7 @@ function CardProjeto({ projeto }: { projeto: Projeto }) {
           <p className="text-xs font-medium text-nevoa/45">{projeto.tipo}</p>
           <h3 className="mt-1 text-lg font-bold text-nevoa">{projeto.titulo}</h3>
         </div>
-        <span className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/15 text-nevoa/70 transition-colors group-hover:border-lima group-hover:bg-lima group-hover:text-roxo-noite">
+        <span className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/15 text-nevoa/70 transition-colors group-hover:border-rosa group-hover:bg-rosa group-hover:text-roxo-noite">
           <IconeSeta className="h-4 w-4" />
           <span className="sr-only">Ver no ar</span>
         </span>
@@ -54,7 +54,7 @@ export default function Work() {
             <p className="rotulo mb-5">Trabalhos</p>
             <h2 className="titulo-secao">Projetos que já estão no ar.</h2>
           </div>
-          <a href="#contato" className="text-sm font-semibold text-nevoa/70 hover:text-lima">
+          <a href="#contato" className="text-sm font-semibold text-nevoa/70 hover:text-rosa">
             Quero um projeto assim →
           </a>
         </Reveal>

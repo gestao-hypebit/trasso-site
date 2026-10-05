@@ -45,7 +45,7 @@ export default function Faq() {
           <h2 className="titulo-secao">Perguntas antes de começar.</h2>
           <p className="mt-5 max-w-sm text-base leading-relaxed text-nevoa/60">
             Não achou o que procurava?{" "}
-            <a href="#contato" className="font-semibold text-nevoa underline decoration-lima/60 underline-offset-4 hover:text-lima">
+            <a href="#contato" className="font-semibold text-nevoa underline decoration-rosa/60 underline-offset-4 hover:text-rosa">
               Fale com a gente
             </a>
             .
@@ -66,7 +66,7 @@ export default function Faq() {
                   <span className="text-base font-semibold text-nevoa sm:text-lg">{item.q}</span>
                   <span
                     className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-lg leading-none transition-all duration-300 ${
-                      isOpen ? "rotate-45 border-lima bg-lima text-roxo-noite" : "border-white/20 text-nevoa/70"
+                      isOpen ? "rotate-45 border-rosa bg-rosa text-roxo-noite" : "border-white/20 text-nevoa/70"
                     }`}
                     aria-hidden="true"
                   >

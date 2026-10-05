@@ -9,8 +9,8 @@ import { WHATSAPP_LANDING_URL } from "./constants";
 
 const initialState: ContactState = { status: "idle", message: "" };
 const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
-const UTM_STORAGE = "trasso-landing-utm";
-/** Formulário do administrativo (trasso-app → Leads → Formulários) que recebe estes leads. */
+const UTM_STORAGE = "slick-landing-utm";
+/** Formulário do administrativo (slick-app → Leads → Formulários) que recebe estes leads. */
 const FORMULARIO = "landing-site";
 
 const labelClass = "mb-2 block text-sm font-semibold text-nevoa/85";
@@ -97,7 +97,7 @@ export default function LeadForm() {
 
       <div className="relative mx-auto max-w-xl px-5 sm:px-8">
         <h2 className="text-center text-3xl leading-[1.08] font-black tracking-tight text-nevoa text-balance sm:text-5xl">
-          Vamos colocar seu negócio <span className="text-lima">no ar</span>?
+          Vamos colocar seu negócio <span className="text-rosa">no ar</span>?
         </h2>
         <p className="mt-4 text-center text-base text-nevoa/75">
           Deixe seu contato e a gente te chama no WhatsApp com o orçamento.
@@ -106,9 +106,9 @@ export default function LeadForm() {
         {state.status === "success" ? (
           <div
             role="status"
-            className="mt-10 rounded-3xl border border-lima/30 bg-roxo-noite/70 px-6 py-10 text-center"
+            className="mt-10 rounded-3xl border border-rosa/30 bg-roxo-noite/70 px-6 py-10 text-center"
           >
-            <p className="text-4xl text-lima" aria-hidden="true">
+            <p className="text-4xl text-rosa" aria-hidden="true">
               ✓
             </p>
             <p className="mt-3 text-2xl font-black text-nevoa">{state.message}</p>
@@ -117,7 +117,7 @@ export default function LeadForm() {
               href={WHATSAPP_LANDING_URL}
               target="_blank"
               rel="noreferrer"
-              className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-lima px-7 py-3.5 text-base font-bold text-roxo-noite"
+              className="mt-6 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-rosa px-7 py-3.5 text-base font-bold text-roxo-noite"
             >
               <WhatsAppIcon className="h-5 w-5" />
               Continuar no WhatsApp
@@ -181,7 +181,7 @@ export default function LeadForm() {
             <button
               type="submit"
               disabled={pending}
-              className="mt-2 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-lima px-7 py-3.5 text-base font-bold text-roxo-noite transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(168,243,0,0.45)] disabled:cursor-not-allowed disabled:opacity-60"
+              className="mt-2 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-rosa px-7 py-3.5 text-base font-bold text-roxo-noite transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(255,53,141,0.45)] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {pending ? "Enviando…" : "Quero meu site"}
               {!pending && <span aria-hidden="true">→</span>}

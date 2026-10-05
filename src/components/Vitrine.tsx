@@ -33,7 +33,7 @@ export default function Vitrine() {
             <Image
               key={p.slug}
               src={p.imagem}
-              alt={i === atual ? `Site ${p.titulo}, feito pela Trasso` : ""}
+              alt={i === atual ? `Site ${p.titulo}, feito pela Slick` : ""}
               fill
               priority={i === 0}
               sizes="(min-width: 1024px) 640px, 92vw"
@@ -65,7 +65,7 @@ export default function Vitrine() {
           rel="noreferrer"
           className="group inline-flex min-w-0 items-center gap-2 text-sm text-nevoa/60 transition-colors hover:text-nevoa"
         >
-          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-lima" aria-hidden="true" />
+          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-rosa" aria-hidden="true" />
           <span className="truncate">
             No ar: <span className="font-semibold text-nevoa">{projeto.titulo}</span>
           </span>
@@ -79,7 +79,7 @@ export default function Vitrine() {
               onClick={() => setAtual(i)}
               aria-label={`Mostrar ${p.titulo}`}
               aria-current={i === atual}
-              className={`h-1.5 rounded-full transition-all duration-300 ${i === atual ? "w-6 bg-lima" : "w-1.5 bg-white/20 hover:bg-white/40"}`}
+              className={`h-1.5 rounded-full transition-all duration-300 ${i === atual ? "w-6 bg-rosa" : "w-1.5 bg-white/20 hover:bg-white/40"}`}
             />
           ))}
         </div>

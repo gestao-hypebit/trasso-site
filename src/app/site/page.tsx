@@ -19,7 +19,7 @@ import {
 
 // Landing das campanhas (Meta Ads / Google Ads): oferta única de criação de site.
 
-const TITLE = "Criação de Sites | Trasso";
+const TITLE = "Criação de Sites | Slick";
 const DESCRIPTION =
   "Site profissional para o seu negócio, a partir de R$750. Domínio próprio, visual sob medida e suporte. Peça seu orçamento pelo WhatsApp.";
 
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "pt_BR",
     url: "/site",
-    siteName: "Trasso",
+    siteName: "Slick",
     title: TITLE,
     description: DESCRIPTION,
   },

@@ -79,12 +79,12 @@ body {
 }
 
 ::selection {
-  background: var(--color-lima);
+  background: var(--color-rosa);
   color: var(--color-roxo-noite);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-lima);
+  outline: 2px solid var(--color-rosa);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -159,8 +159,8 @@ body {
 
 
 /* ------------------------------------------------------------------
-   Home (v2) — sistema mais contido: roxo noite de base, lima só para
-   ação e para o traço.
+   Home (v2) — sistema mais contido: roxo noite de base, rosa para ação
+   e destaque, lima só em detalhes pontuais.
    ------------------------------------------------------------------ */
 
 .traco-stroke path {
@@ -178,7 +178,7 @@ body {
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--color-lima);
+  color: var(--color-rosa);
 }
 
 .rotulo::before {

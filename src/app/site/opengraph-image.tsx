@@ -4,7 +4,7 @@ import { join } from "node:path";
 
 // Mesmo visual da OG da home (app/opengraph-image), com a oferta da landing.
 
-export const alt = "Trasso — Site profissional para o seu negócio, no ar em 3 dias";
+export const alt = "Slick — Site profissional para o seu negócio, no ar em 3 dias";
 export const size = {
   width: 1200,
   height: 630,
@@ -13,10 +13,10 @@ export const contentType = "image/png";
 
 export default async function Image() {
   const logoData = await readFile(
-    join(process.cwd(), "public/images/cropped/monogram-ss-lima.png"),
+    join(process.cwd(), "public/images/slick/logo-nevoa.svg"),
     "base64"
   );
-  const logoSrc = `data:image/png;base64,${logoData}`;
+  const logoSrc = `data:image/svg+xml;base64,${logoData}`;
 
   return new ImageResponse(
     (
@@ -31,11 +31,11 @@ export default async function Image() {
           padding: "80px",
           background: "#1a0533",
           backgroundImage:
-            "radial-gradient(circle at 85% 15%, rgba(124,58,237,0.55), transparent 55%), radial-gradient(circle at 10% 90%, rgba(255,53,141,0.28), transparent 50%)",
+            "radial-gradient(circle at 85% 15%, rgba(124,58,237,0.5), transparent 55%), radial-gradient(circle at 10% 90%, rgba(255,53,141,0.4), transparent 50%)",
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={logoSrc} width={140} height={47} alt="" />
+        <img src={logoSrc} width={190} height={80} alt="" />
 
         <div
           style={{
@@ -50,7 +50,7 @@ export default async function Image() {
           }}
         >
           <span>Seu negócio com site profissional,</span>
-          <span style={{ color: "#a8f300" }}>no ar em 3 dias</span>
+          <span style={{ color: "#ff358d" }}>no ar em 3 dias</span>
         </div>
 
         <div
@@ -59,7 +59,7 @@ export default async function Image() {
             marginTop: 36,
             padding: "14px 28px",
             borderRadius: 999,
-            background: "#a8f300",
+            background: "#ff358d",
             color: "#1a0533",
             fontSize: 34,
             fontWeight: 800,

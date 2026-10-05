@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 /**
- * O traço da marca: sublinhado desenhado à mão que se desenha ao carregar.
+ * Destaque da marca: sublinhado desenhado à mão que se desenha ao carregar.
  * Usado só em dois pontos da home (título do topo e do contato), de propósito.
  */
 export default function Traco({ children, delay = 0.5 }: { children: ReactNode; delay?: number }) {
@@ -17,7 +17,7 @@ export default function Traco({ children, delay = 0.5 }: { children: ReactNode; 
       >
         <path
           d="M4 15C58 6 132 3 178 10S258 19 296 7"
-          stroke="var(--color-lima)"
+          stroke="var(--color-rosa)"
           strokeWidth="6"
           strokeLinecap="round"
           style={{ animationDelay: `${delay}s` }}

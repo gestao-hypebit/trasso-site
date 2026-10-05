@@ -1,5 +1,5 @@
 // Só roda no servidor (lê LEADS_API_KEY); o Cta importa apenas os tipos.
-// O formulário de contato é montado no administrativo (trasso-app → Leads →
+// O formulário de contato é montado no administrativo (slick-app → Leads →
 // Formulários). O site busca a definição por aqui e envia as respostas para lá.
 
 export type CampoTipo =
@@ -49,7 +49,7 @@ export const FORMULARIO_PADRAO: FormularioPublico = {
 };
 
 export function adminUrl(path: string) {
-  const base = process.env.TRASSO_ADMIN_URL?.replace(/\/$/, "");
+  const base = (process.env.SLICK_ADMIN_URL ?? process.env.TRASSO_ADMIN_URL)?.replace(/\/$/, "");
   const key = process.env.LEADS_API_KEY;
   if (!base || !key) return null;
   return { url: `${base}${path}`, headers: { "x-api-key": key } };

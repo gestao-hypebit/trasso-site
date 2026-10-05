@@ -36,7 +36,7 @@ export default function Process() {
           {ETAPAS.map((etapa, i) => (
             <li key={etapa.titulo} className="border-t border-white/[0.08]">
               <Reveal delay={i * 0.06} className="grid grid-cols-[3rem_1fr] gap-4 py-8 sm:grid-cols-[4rem_1fr]">
-                <span className="pt-0.5 text-sm font-bold text-lima tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+                <span className="pt-0.5 text-sm font-bold text-rosa tabular-nums">{String(i + 1).padStart(2, "0")}</span>
                 <div>
                   <h3 className="text-lg font-bold text-nevoa sm:text-xl">{etapa.titulo}</h3>
                   <p className="mt-2 max-w-lg text-[15px] leading-relaxed text-nevoa/60">{etapa.descricao}</p>

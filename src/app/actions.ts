@@ -3,7 +3,7 @@
 import { Resend } from "resend";
 import { adminUrl, FORM_SLUG } from "@/lib/formulario";
 
-const CONTACT_TO = "gestao@trasso.com.br";
+const CONTACT_TO = "gestao@slick.com.br";
 /** Must be a verified sender in Resend. Falls back to their shared test address. */
 const CONTACT_FROM = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
 const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
@@ -18,7 +18,7 @@ export type ContactState = {
 
 const ERRO_ENVIO: ContactState = {
   status: "error",
-  message: "Não conseguimos enviar agora. Tenta de novo ou manda um e-mail pra gestao@trasso.com.br.",
+  message: "Não conseguimos enviar agora. Tenta de novo ou manda um e-mail pra gestao@slick.com.br.",
 };
 
 /** Agrupa o FormData: campos repetidos (múltipla escolha) viram lista. */
@@ -45,7 +45,7 @@ async function enviarPorEmail(valores: Record<string, string | string[]>, extras
       .map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(", ") : v}`)
       .join("\n");
     const { error } = await new Resend(process.env.RESEND_API_KEY).emails.send({
-      from: `Site Trasso <${CONTACT_FROM}>`,
+      from: `Site Slick <${CONTACT_FROM}>`,
       to: CONTACT_TO,
       replyTo: typeof email === "string" ? email : undefined,
       subject: `Novo projeto — ${nome}${extras.origem ? ` [${extras.origem}]` : ""} (administrativo fora do ar)`,
@@ -108,7 +108,7 @@ export async function sendContactMessage(
       console.error("Falha ao enviar lead ao administrativo:", error);
     }
   } else {
-    console.error("TRASSO_ADMIN_URL/LEADS_API_KEY não configuradas — usando e-mail.");
+    console.error("SLICK_ADMIN_URL/LEADS_API_KEY não configuradas — usando e-mail.");
   }
 
   return (await enviarPorEmail(valores, extras))

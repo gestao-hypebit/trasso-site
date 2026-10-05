@@ -11,9 +11,9 @@ export default function Slogan() {
           <p className="eyebrow mb-8 justify-center text-rosa">Nosso lema</p>
           <p className="text-3xl leading-[1.15] font-black tracking-tight text-roxo-noite text-balance sm:text-5xl lg:text-6xl">
             <span className="text-violeta">Criatividade</span> e{" "}
-            <span className="text-rosa">tecnologia</span> no mesmo{" "}
+            <span className="text-violeta">tecnologia</span>,{" "}
             <span className="relative inline-block whitespace-nowrap text-rosa">
-              traço.
+              sem atrito.
               <svg
                 className="hero-underline absolute -bottom-1 left-0 w-full sm:-bottom-2"
                 viewBox="0 0 300 24"

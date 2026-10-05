@@ -46,7 +46,7 @@ export default function Services() {
                   <div className="relative aspect-[16/10]">
                     <Image
                       src="/images/projetos/fluminous-desktop.jpg"
-                      alt="Site da Fluminous, feito pela Trasso"
+                      alt="Site da Fluminous, feito pela Slick"
                       fill
                       sizes="(min-width: 1024px) 360px, 90vw"
                       className="object-cover object-top"
@@ -60,12 +60,12 @@ export default function Services() {
                 </PhoneFrame>
               </div>
               <div className="mt-auto p-7 pt-14 sm:p-9 sm:pt-16">
-                <IconeSite className="mb-5 h-7 w-7 text-lima" />
+                <IconeSite className="mb-5 h-7 w-7 text-rosa" />
                 <h3 className="text-xl font-bold text-nevoa sm:text-2xl">Sites e landing pages</h3>
                 <p className="mt-3 text-[15px] leading-relaxed text-nevoa/60">
                   Sites institucionais e páginas de venda rápidos, bonitos no celular e preparados para aparecer no Google.
                 </p>
-                <a href="#trabalhos" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-lima hover:underline">
+                <a href="#trabalhos" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-rosa hover:underline">
                   Ver sites que fizemos <span aria-hidden="true">→</span>
                 </a>
               </div>
@@ -75,7 +75,7 @@ export default function Services() {
           {SERVICOS.map((s, i) => (
             <Reveal key={s.titulo} delay={0.06 * (i + 1)}>
               <div className={`${card} h-full p-7 sm:p-8`}>
-                <s.icone className="mb-6 h-7 w-7 text-lima" />
+                <s.icone className="mb-6 h-7 w-7 text-rosa" />
                 <h3 className="text-lg font-bold text-nevoa">{s.titulo}</h3>
                 <p className="mt-2.5 text-[15px] leading-relaxed text-nevoa/60">{s.descricao}</p>
               </div>

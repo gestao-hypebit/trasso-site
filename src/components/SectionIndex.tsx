@@ -14,7 +14,7 @@ const SECTIONS = [
   { id: "contato", label: "Contato" },
 ];
 
-/** A literal traço running down the side, marking where you are in the story. */
+/** A thin line running down the side, marking where you are in the story. */
 export default function SectionIndex() {
   const [active, setActive] = useState("topo");
   // As seções são da home; em landings (ex.: /site) o índice não aparece.
@@ -59,7 +59,7 @@ export default function SectionIndex() {
             <span
               className={`text-[11px] font-semibold tracking-wide whitespace-nowrap transition-all duration-300 ${
                 isActive
-                  ? "max-w-[9rem] text-lima opacity-100"
+                  ? "max-w-[9rem] text-rosa opacity-100"
                   : "max-w-0 overflow-hidden text-nevoa/60 opacity-0 group-hover:max-w-[9rem] group-hover:opacity-100"
               }`}
             >
@@ -67,7 +67,7 @@ export default function SectionIndex() {
             </span>
             <span
               className={`h-1.5 w-1.5 shrink-0 rounded-full transition-colors duration-300 ${
-                isActive ? "bg-lima" : "bg-nevoa/40 group-hover:bg-nevoa/70"
+                isActive ? "bg-rosa" : "bg-nevoa/40 group-hover:bg-nevoa/70"
               }`}
             />
           </a>
