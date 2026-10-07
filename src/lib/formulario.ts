@@ -68,7 +68,10 @@ export async function getFormulario(): Promise<FormularioPublico | null> {
       headers: alvo.headers,
       next: { revalidate: 60 },
     });
-    if (res.status === 404) return null;
+    // 404 em JSON = formulário pausado no administrativo. Um 404 em HTML quer dizer que a URL
+    // aponta para outro app (ex.: o próprio site rodando na porta do administrativo).
+    const ehJson = res.headers.get("content-type")?.includes("application/json");
+    if (res.status === 404 && ehJson) return null;
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = (await res.json()) as FormularioPublico;
     return Array.isArray(data.campos) && data.campos.length > 0 ? data : FORMULARIO_PADRAO;

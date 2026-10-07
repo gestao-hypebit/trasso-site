@@ -1,10 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Permanent_Marker } from "next/font/google";
+import { Inter, JetBrains_Mono, Permanent_Marker } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
+});
+
+// Rótulos e microtextos em mono, como nos posts do Instagram.
+const mono = JetBrains_Mono({
+  variable: "--font-mono-slick",
+  subsets: ["latin"],
+  weight: ["500", "600"],
   display: "swap",
 });
 
@@ -17,9 +25,9 @@ const marker = Permanent_Marker({
 
 const SITE_URL = "https://slick.com.br";
 const SITE_NAME = "Slick";
-const TITLE = "Slick — Criatividade e tecnologia, sem atrito";
+const TITLE = "Slick | Sites, Apps e Sistemas";
 const DESCRIPTION =
-  "A Slick é uma agência criativa que une estratégia, design e tecnologia: identidade de marca, sites, sistemas, apps e automação. Da ideia ao ar, sem atrito.";
+  "Slick: tecnologia e design sob medida pro seu negócio. Sites, sistemas, apps e identidade visual — do primeiro “oi” ao projeto no ar.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -87,12 +95,12 @@ const jsonLd = {
   name: SITE_NAME,
   legalName: "Slick",
   url: SITE_URL,
-  logo: `${SITE_URL}/images/slick/logo-roxo.png`,
+  logo: `${SITE_URL}/images/slick/logo-slick-roxo.png`,
   image: `${SITE_URL}/opengraph-image`,
   description: DESCRIPTION,
-  slogan: "Criatividade e tecnologia, sem atrito",
+  slogan: "Tecnologia e design sob medida pro seu negócio",
   email: "gestao@slick.com.br",
-  sameAs: ["https://instagram.com/_agenciaslick"],
+  sameAs: ["https://www.instagram.com/agenciaslick/"],
   address: {
     "@type": "PostalAddress",
     addressCountry: "BR",
@@ -113,9 +121,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    // suppressHydrationWarning: o script do preloader (Preloader.tsx) marca o <html> antes da hidratação.
     <html
       lang="pt-BR"
-      className={`${inter.variable} ${marker.variable} scroll-smooth`}
+      className={`${inter.variable} ${mono.variable} ${marker.variable} scroll-smooth`}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col bg-roxo-noite text-nevoa antialiased">
         <script

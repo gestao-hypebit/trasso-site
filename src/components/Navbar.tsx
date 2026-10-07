@@ -6,7 +6,7 @@ import Logo from "./Logo";
 const LINKS = [
   { href: "#servicos", label: "Serviços" },
   { href: "#trabalhos", label: "Trabalhos" },
-  { href: "#processo", label: "Como trabalhamos" },
+  { href: "#processo", label: "Como é com a gente" },
   { href: "#faq", label: "Dúvidas" },
 ];
 
@@ -42,9 +42,9 @@ export default function Navbar() {
 
         <a
           href="#contato"
-          className="hidden rounded-full border border-rosa/60 px-5 py-2.5 text-sm font-semibold text-rosa transition-colors hover:bg-rosa hover:text-roxo-noite md:inline-block"
+          className="hidden rounded-full border border-lima/60 px-5 py-2.5 text-sm font-semibold text-lima transition-colors hover:bg-lima hover:text-roxo-noite md:inline-block"
         >
-          Pedir orçamento
+          Manda um “oi”
         </a>
 
         <button
@@ -78,9 +78,9 @@ export default function Navbar() {
           <a
             href="#contato"
             onClick={() => setOpen(false)}
-            className="mt-3 block rounded-full bg-rosa px-5 py-3 text-center text-sm font-bold text-roxo-noite"
+            className="mt-3 block rounded-full bg-lima px-5 py-3 text-center text-sm font-bold text-roxo-noite"
           >
-            Pedir orçamento
+            Manda um “oi”
           </a>
         </div>
       )}

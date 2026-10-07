@@ -24,7 +24,7 @@ export function LandingHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-roxo-noite/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3 sm:px-8">
-        <Wordmark className="h-7 w-auto text-nevoa sm:h-8" />
+        <Wordmark priority className="h-7 w-auto sm:h-8" />
         <a
           href="#formulario"
           className="rounded-full bg-rosa px-4 py-2 text-sm font-bold text-roxo-noite"

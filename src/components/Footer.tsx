@@ -1,24 +1,18 @@
-import Logo from "./Logo";
+import Logo, { Wordmark } from "./Logo";
 import { whatsappUrl } from "@/lib/whatsapp";
 
-const SERVICOS = [
-  "Sites e landing pages",
-  "Sistemas e plataformas web",
-  "Aplicativos",
-  "Identidade visual",
-  "Integrações e automação",
-];
+const SERVICOS = ["Sites e landing pages", "Software sob demanda", "Aplicativos", "Identidade visual"];
 
 const NAVEGACAO = [
   { href: "#servicos", label: "Serviços" },
   { href: "#trabalhos", label: "Trabalhos" },
-  { href: "#catalogo-place", label: "Catálogo Place" },
+  { href: "#duvida", label: "Site, sistema ou app?" },
   { href: "#processo", label: "Como trabalhamos" },
   { href: "#faq", label: "Dúvidas" },
 ];
 
 const titulo = "mb-5 text-xs font-semibold tracking-[0.18em] text-nevoa/40 uppercase";
-const link = "text-sm text-nevoa/65 transition-colors hover:text-rosa";
+const link = "text-sm text-nevoa/65 transition-colors hover:text-lima";
 
 export default function Footer() {
   return (
@@ -27,7 +21,7 @@ export default function Footer() {
         <div>
           <Logo />
           <p className="mt-5 max-w-xs text-sm leading-relaxed text-nevoa/50">
-            Agência de design e tecnologia. Sites, sistemas, apps e identidades visuais para empresas de todo o Brasil.
+            Tecnologia e design sob medida pro seu negócio. Sites, sistemas, apps e identidade visual.
           </p>
         </div>
 
@@ -65,16 +59,21 @@ export default function Footer() {
               <a href="mailto:gestao@slick.com.br" className={link}>gestao@slick.com.br</a>
             </li>
             <li>
-              <a href="https://instagram.com/_agenciaslick" target="_blank" rel="noreferrer" className={link}>
-                Instagram @_agenciaslick
+              <a href="https://www.instagram.com/agenciaslick/" target="_blank" rel="noreferrer" className={link}>
+                Instagram @agenciaslick
               </a>
             </li>
           </ul>
         </div>
       </div>
 
-      <div className="mx-auto mt-16 flex max-w-7xl flex-wrap items-center justify-between gap-4 border-t border-white/[0.06] px-6 pt-8 text-xs text-nevoa/35 lg:px-10">
-        <p>© {new Date().getFullYear()} Slick. Criatividade e tecnologia, sem atrito.</p>
+      {/* Assinatura gigante, quase apagada, fechando a página. */}
+      <div className="mx-auto mt-20 max-w-7xl px-6 lg:px-10" aria-hidden="true">
+        <Wordmark className="h-auto w-full opacity-[0.07]" />
+      </div>
+
+      <div className="mx-auto mt-12 flex max-w-7xl flex-wrap items-center justify-between gap-4 border-t border-white/[0.06] px-6 pt-8 text-xs text-nevoa/35 lg:px-10">
+        <p>© {new Date().getFullYear()} Slick. Do primeiro “oi” ao projeto no ar.</p>
         <a href="#topo" className="hover:text-nevoa">Voltar ao topo ↑</a>
       </div>
     </footer>

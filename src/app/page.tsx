@@ -1,7 +1,11 @@
 import Navbar from "@/components/Navbar";
+import Preloader, { SCRIPT_PULAR_PRELOADER } from "@/components/Preloader";
 import Hero from "@/components/Hero";
+import Showreel from "@/components/Showreel";
+import Sobre from "@/components/Sobre";
+import Numeros from "@/components/Numeros";
 import Services from "@/components/Services";
-import CatalogoPlace from "@/components/CatalogoPlace";
+import Duvida from "@/components/Duvida";
 import Work from "@/components/Work";
 import Process from "@/components/Process";
 import Faq from "@/components/Faq";
@@ -18,12 +22,20 @@ export default async function Home() {
 
   return (
     <>
+      <script dangerouslySetInnerHTML={{ __html: SCRIPT_PULAR_PRELOADER }} />
+      <noscript>
+        <style>{".preloader{display:none}"}</style>
+      </noscript>
+      <Preloader />
       <Navbar />
       <main>
         <Hero />
+        <Showreel />
+        <Sobre />
         <Services />
-        <CatalogoPlace />
         <Work />
+        <Numeros />
+        <Duvida />
         <Process />
         {/* Depoimentos voltam quando houver falas reais de clientes (ver Testimonials.tsx). */}
         <Faq />

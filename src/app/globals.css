@@ -20,8 +20,10 @@
 
   --font-sans: var(--font-inter);
   --font-marker: var(--font-marker);
+  --font-mono: var(--font-mono-slick), ui-monospace, monospace;
 
   --animate-marquee: marquee 34s linear infinite;
+  --animate-marquee-reverse: marquee 38s linear infinite reverse;
   --animate-float: float 7s ease-in-out infinite;
 }
 
@@ -79,12 +81,12 @@ body {
 }
 
 ::selection {
-  background: var(--color-rosa);
+  background: var(--color-lima);
   color: var(--color-roxo-noite);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-rosa);
+  outline: 2px solid var(--color-lima);
   outline-offset: 3px;
   border-radius: 2px;
 }
@@ -169,24 +171,53 @@ body {
   animation: draw-stroke 1.1s cubic-bezier(0.65, 0, 0.35, 1) forwards;
 }
 
-/* Rótulo de seção: pequeno, em caixa alta, com um traço curto antes. */
+/* Rótulo de seção, como nos posts do Instagram: "● O QUE A GENTE FAZ" em mono. */
 .rotulo {
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--color-rosa);
+  color: var(--color-lima);
 }
 
 .rotulo::before {
   content: "";
-  width: 1.5rem;
-  height: 1.5px;
-  border-radius: 2px;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 9999px;
   background: currentColor;
+}
+
+/* Destaque de palavra com tarja lima (a "marca-texto" dos posts). */
+.tarja {
+  background: var(--color-lima);
+  color: var(--color-roxo-noite);
+  padding: 0 0.14em;
+  margin: 0 -0.02em;
+  border-radius: 0.12em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* No topo, a tarja se pinta da esquerda para a direita ao carregar. */
+.tarja-anim {
+  background: linear-gradient(var(--color-lima), var(--color-lima)) no-repeat left / 0% 100%;
+  animation: tarja-pinta 0.7s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+@keyframes tarja-pinta {
+  from {
+    background-size: 0% 100%;
+    color: var(--color-nevoa);
+  }
+  to {
+    background-size: 100% 100%;
+    color: var(--color-roxo-noite);
+  }
 }
 
 .titulo-secao {
@@ -201,4 +232,16 @@ body {
 /* Troca suave entre os projetos do mockup do topo. */
 .vitrine-slide {
   transition: opacity 0.9s ease, transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Preloader da home: some antes da pintura em visitas repetidas (ver Preloader.tsx). */
+html[data-sem-preloader] .preloader {
+  display: none;
+}
+
+/* Enquanto o preloader está na tela, o topo espera para animar junto com a cortina. */
+html[data-carregando] .fade-up,
+html[data-carregando] .tarja-anim,
+html[data-carregando] .traco-stroke path {
+  animation-play-state: paused;
 }

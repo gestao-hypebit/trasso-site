@@ -13,10 +13,10 @@ export const contentType = "image/png";
 
 export default async function Image() {
   const logoData = await readFile(
-    join(process.cwd(), "public/images/slick/logo-nevoa.svg"),
+    join(process.cwd(), "public/images/slick/logo-slick.png"),
     "base64"
   );
-  const logoSrc = `data:image/svg+xml;base64,${logoData}`;
+  const logoSrc = `data:image/png;base64,${logoData}`;
 
   return new ImageResponse(
     (
@@ -35,7 +35,7 @@ export default async function Image() {
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={logoSrc} width={190} height={80} alt="" />
+        <img src={logoSrc} width={190} height={67} alt="" />
 
         <div
           style={{
