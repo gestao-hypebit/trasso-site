@@ -1,4 +1,4 @@
-// Meta Pixel: só é carregado na landing /site (components/landing/MetaPixel).
+// Meta Pixel: só é carregado nas landings /site e /planejadores (components/landing/MetaPixel).
 // As chamadas são seguras — se o Pixel não carregou, nada acontece.
 
 declare global {

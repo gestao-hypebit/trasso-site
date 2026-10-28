@@ -7,8 +7,11 @@ import { META_PIXEL_ID, trackPixel } from "@/lib/metaPixel";
 /**
  * Carrega o Meta Pixel (PageView no carregamento) e dispara `Contact`
  * em qualquer clique num link de WhatsApp da página.
+ *
+ * `leadPendente`: chave do sessionStorage marcada pelo formulário antes de
+ * redirecionar. Se existir, dispara `Lead` uma vez (página de obrigado).
  */
-export default function MetaPixel() {
+export default function MetaPixel({ leadPendente }: { leadPendente?: string } = {}) {
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
       const link = (e.target as Element | null)?.closest?.('a[href*="wa.me/"]');
@@ -29,7 +32,12 @@ n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
 document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init','${META_PIXEL_ID}');
-fbq('track','PageView');`}
+fbq('track','PageView');${
+          leadPendente
+            ? `
+try{if(sessionStorage.getItem(${JSON.stringify(leadPendente)})){sessionStorage.removeItem(${JSON.stringify(leadPendente)});fbq('track','Lead');}}catch(e){}`
+            : ""
+        }`}
       </Script>
       <noscript>
         {/* eslint-disable-next-line @next/next/no-img-element */}

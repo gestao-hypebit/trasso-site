@@ -6,9 +6,10 @@ import { adminUrl, FORM_SLUG } from "@/lib/formulario";
 const CONTACT_TO = "gestao@slick.com.br";
 /** Must be a verified sender in Resend. Falls back to their shared test address. */
 const CONTACT_FROM = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
-const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
-/** Formulários do administrativo que o site pode usar (landing /site usa o "landing-site"). */
-const FORMULARIOS_PERMITIDOS = new Set([FORM_SLUG, "landing-site"]);
+// fbclid vai junto das UTMs (só a landing /planejadores envia).
+const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "fbclid"];
+/** Formulários do administrativo que o site pode usar (landings /site e /planejadores). */
+const FORMULARIOS_PERMITIDOS = new Set([FORM_SLUG, "landing-site", "landing-planejadores"]);
 
 export type ContactState = {
   status: "idle" | "success" | "error";
@@ -80,7 +81,7 @@ export async function sendContactMessage(
   const extras: Record<string, string> = {};
   if (origem) extras.origem = origem;
   if (pagina) extras.pagina = pagina;
-  for (const [k, v] of Object.entries(utm)) extras[`utm_${k}`] = String(v);
+  for (const [k, v] of Object.entries(utm)) extras[k === "fbclid" ? k : `utm_${k}`] = String(v);
 
   const alvo = adminUrl(`/api/publico/formularios/${slug}`);
   if (alvo) {
