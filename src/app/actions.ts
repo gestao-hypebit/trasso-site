@@ -1,7 +1,9 @@
 "use server";
 
+import { after } from "next/server";
 import { Resend } from "resend";
 import { adminUrl, FORM_SLUG } from "@/lib/formulario";
+import { enviarLeadCapi } from "@/lib/metaCapi";
 
 const CONTACT_TO = "gestao@slick.com.br";
 /** Must be a verified sender in Resend. Falls back to their shared test address. */
@@ -83,6 +85,24 @@ export async function sendContactMessage(
   if (pagina) extras.pagina = pagina;
   for (const [k, v] of Object.entries(utm)) extras[k === "fbclid" ? k : `utm_${k}`] = String(v);
 
+  // Com event_id (landing /planejadores), o Lead também vai pela API de Conversões
+  // depois da resposta, com o mesmo id do Pixel para o Meta não contar duas vezes.
+  const eventId = String(formData.get("_event_id") ?? "");
+  const sucesso = (message: string): ContactState => {
+    if (/^[\w-]{8,64}$/.test(eventId)) {
+      after(() =>
+        enviarLeadCapi({
+          eventId,
+          telefone: String(valores.telefone ?? ""),
+          nome: String(valores.nome ?? ""),
+          pagina,
+          fbclid: utm.fbclid ? String(utm.fbclid) : undefined,
+        }),
+      );
+    }
+    return { status: "success", message };
+  };
+
   const alvo = adminUrl(`/api/publico/formularios/${slug}`);
   if (alvo) {
     try {
@@ -99,7 +119,7 @@ export async function sendContactMessage(
       };
 
       if (res.ok) {
-        return { status: "success", message: data.mensagem ?? "Recebemos! A gente te responde em breve." };
+        return sucesso(data.mensagem ?? "Recebemos! A gente te responde em breve.");
       }
       if (res.status === 422) {
         return { status: "error", message: data.error ?? "Confere os campos destacados.", erros: data.erros };
@@ -113,6 +133,6 @@ export async function sendContactMessage(
   }
 
   return (await enviarPorEmail(valores, extras))
-    ? { status: "success", message: "Recebemos! A gente te responde em breve." }
+    ? sucesso("Recebemos! A gente te responde em breve.")
     : ERRO_ENVIO;
 }

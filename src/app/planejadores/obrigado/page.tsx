@@ -3,10 +3,10 @@ import MetaPixel from "@/components/landing/MetaPixel";
 import Grain from "@/components/Grain";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
 import { PlanejadoresFooter, PlanejadoresHeader, ctaPrimario } from "@/components/landing/planejadores/Secoes";
-import { LEAD_PENDENTE, WHATSAPP_OBRIGADO_URL } from "@/components/landing/planejadores/constants";
+import { WHATSAPP_OBRIGADO_URL } from "@/components/landing/planejadores/constants";
 
-// Destino do formulário de /planejadores. O Pixel dispara PageView e,
-// se o formulário acabou de ser enviado, Lead (ver LEAD_PENDENTE).
+// Destino do formulário de /planejadores. O Pixel dispara PageView; o Lead já saiu
+// no formulário (navegador + API de Conversões, com o mesmo event_id).
 
 export const metadata: Metadata = {
   title: { absolute: "Recebemos suas respostas! | Slick" },
@@ -17,7 +17,7 @@ export default function PlanejadoresObrigado() {
   return (
     <>
       <Grain />
-      <MetaPixel leadPendente={LEAD_PENDENTE} />
+      <MetaPixel />
       <PlanejadoresHeader />
       <main className="relative flex-1 overflow-hidden py-16 sm:py-24">
         <div className="aurora top-0 left-1/2 h-[480px] w-[480px] -translate-x-1/2 bg-violeta/20" aria-hidden="true" />

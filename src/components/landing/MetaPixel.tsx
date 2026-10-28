@@ -1,17 +1,32 @@
 "use client";
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Script from "next/script";
 import { META_PIXEL_ID, trackPixel } from "@/lib/metaPixel";
 
 /**
- * Carrega o Meta Pixel (PageView no carregamento) e dispara `Contact`
- * em qualquer clique num link de WhatsApp da página.
- *
- * `leadPendente`: chave do sessionStorage marcada pelo formulário antes de
- * redirecionar. Se existir, dispara `Lead` uma vez (página de obrigado).
+ * Pageview da carga inicial já saiu pelo script abaixo. Fica no módulo (e não no
+ * componente) porque o componente remonta a cada página, mas o script não roda de novo.
  */
-export default function MetaPixel({ leadPendente }: { leadPendente?: string } = {}) {
+let pageViewInicialFeito = false;
+
+/**
+ * Carrega o Meta Pixel (init + PageView uma vez por carga, deduplicado pelo `id`
+ * do next/script), dispara PageView nas trocas de rota do client e `Contact`
+ * em qualquer clique num link de WhatsApp da página.
+ */
+export default function MetaPixel() {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (!pageViewInicialFeito) {
+      pageViewInicialFeito = true;
+      return;
+    }
+    trackPixel("PageView");
+  }, [pathname]);
+
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
       const link = (e.target as Element | null)?.closest?.('a[href*="wa.me/"]');
@@ -32,12 +47,7 @@ n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
 document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init','${META_PIXEL_ID}');
-fbq('track','PageView');${
-          leadPendente
-            ? `
-try{if(sessionStorage.getItem(${JSON.stringify(leadPendente)})){sessionStorage.removeItem(${JSON.stringify(leadPendente)});fbq('track','Lead');}}catch(e){}`
-            : ""
-        }`}
+fbq('track','PageView');`}
       </Script>
       <noscript>
         {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -13,8 +13,6 @@ export const RESTANTE = "R$ 663";
 
 /** Formulário do administrativo (slick-app → Leads → Formulários) que recebe estes leads. */
 export const FORMULARIO = "landing-planejadores";
-/** Marcado pelo formulário antes de ir para /obrigado; lá o Pixel dispara `Lead`. */
-export const LEAD_PENDENTE = "slick-planejadores-lead";
 
 /**
  * Depoimentos de clientes do segmento (seção depois do portfólio).

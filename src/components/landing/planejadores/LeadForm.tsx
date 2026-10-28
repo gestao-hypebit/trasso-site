@@ -3,8 +3,9 @@
 import { startTransition, useActionState, useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { sendContactMessage, type ContactState } from "@/app/actions";
+import { trackPixel } from "@/lib/metaPixel";
 import { mascaraTelefone } from "@/lib/telefone";
-import { FORMULARIO, LEAD_PENDENTE, PERGUNTAS_QUALIFICACAO, qualificar, type Pergunta } from "./constants";
+import { FORMULARIO, PERGUNTAS_QUALIFICACAO, qualificar, type Pergunta } from "./constants";
 
 // Mesmo envio da landing /site (server action → administrativo), com as
 // perguntas de qualificação e redirecionamento para /planejadores/obrigado.
@@ -12,6 +13,8 @@ import { FORMULARIO, LEAD_PENDENTE, PERGUNTAS_QUALIFICACAO, qualificar, type Per
 const initialState: ContactState = { status: "idle", message: "" };
 const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "fbclid"];
 const UTM_STORAGE = "slick-planejadores-utm";
+/** Tempo para o Pixel despachar o Lead antes de trocar de página. */
+const ESPERA_REDIRECT_MS = 300;
 
 const labelClass = "mb-2 block text-sm font-semibold text-nevoa/85";
 const inputClass =
@@ -76,6 +79,8 @@ export default function LeadForm() {
   const [state, formAction, pending] = useActionState(sendContactMessage, initialState);
   const [erros, setErros] = useState<Record<string, string>>({});
   const utms = useRef<Record<string, string>>({});
+  // Mesmo id no Pixel e na API de Conversões: o Meta conta o Lead uma vez só.
+  const eventId = useRef("");
 
   useEffect(() => {
     utms.current = lerUtms();
@@ -88,14 +93,13 @@ export default function LeadForm() {
     setErros(state.erros ?? {});
   }
 
-  // Navegação completa: a página de obrigado carrega o Pixel do zero e dispara
-  // PageView + Lead (sem risco de o evento se perder na troca de página).
+  // Lead só depois do sucesso; o redirect espera o Pixel despachar o evento.
+  // Navegação completa: a página de obrigado carrega o Pixel e dispara o PageView dela.
   useEffect(() => {
     if (state.status !== "success") return;
-    try {
-      sessionStorage.setItem(LEAD_PENDENTE, "1");
-    } catch {}
-    window.location.assign("/planejadores/obrigado");
+    trackPixel("Lead", {}, { eventID: eventId.current });
+    const timer = setTimeout(() => window.location.assign("/planejadores/obrigado"), ESPERA_REDIRECT_MS);
+    return () => clearTimeout(timer);
   }, [state]);
 
   // Submissão manual: com `action={...}` o React limpa o formulário mesmo
@@ -110,6 +114,8 @@ export default function LeadForm() {
     fd.set("_formulario", FORMULARIO);
     fd.set("_origem", "landing-planejadores");
     fd.set("_pagina", window.location.pathname);
+    eventId.current = crypto.randomUUID();
+    fd.set("_event_id", eventId.current);
     for (const [k, v] of Object.entries(utms.current)) fd.set(`_${k}`, v);
     startTransition(() => formAction(fd));
   }
