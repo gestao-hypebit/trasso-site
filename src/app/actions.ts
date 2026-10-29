@@ -61,6 +61,33 @@ async function enviarPorEmail(valores: Record<string, string | string[]>, extras
   }
 }
 
+/**
+ * Lead quente (landing /planejadores) pede resposta em minutos: avisa por e-mail
+ * na hora, com o link do WhatsApp da pessoa. Não bloqueia nem derruba o envio.
+ */
+async function alertarLeadQuente(valores: Record<string, string | string[]>, extras: Record<string, string>) {
+  if (!process.env.RESEND_API_KEY) return;
+  try {
+    const nome = String(valores.nome ?? "Sem nome");
+    const digitos = String(valores.telefone ?? "").replace(/\D/g, "");
+    const whatsapp = digitos ? `https://wa.me/55${digitos}?text=${encodeURIComponent(`Oi ${nome.split(" ")[0]}! Aqui é da Slick, vi que você pediu um site.`)}` : "";
+    const corpo = [
+      `${nome} acabou de preencher o formulário e foi classificado como QUENTE.`,
+      whatsapp ? `Chamar agora: ${whatsapp}` : "Sem telefone válido.",
+      "",
+      ...Object.entries({ ...valores, ...extras }).map(([k, v]) => `${k}: ${Array.isArray(v) ? v.join(", ") : v}`),
+    ].join("\n");
+    await new Resend(process.env.RESEND_API_KEY).emails.send({
+      from: `Site Slick <${CONTACT_FROM}>`,
+      to: CONTACT_TO,
+      subject: `🔥 Lead quente — ${nome}`,
+      text: corpo,
+    });
+  } catch (error) {
+    console.error("Falha no alerta de lead quente:", error);
+  }
+}
+
 export async function sendContactMessage(
   _prevState: ContactState,
   formData: FormData,
@@ -72,7 +99,7 @@ export async function sendContactMessage(
 
   const valores = coletarValores(formData);
   const utm = Object.fromEntries(
-    UTM_KEYS.map((k) => [k.replace("utm_", ""), String(formData.get(`_${k}`) ?? "")]).filter(([, v]) => v),
+    UTM_KEYS.map((k) => [k, String(formData.get(`_${k}`) ?? "")]).filter(([, v]) => v),
   );
 
   const pagina = String(formData.get("_pagina") ?? "");
@@ -83,12 +110,13 @@ export async function sendContactMessage(
   const extras: Record<string, string> = {};
   if (origem) extras.origem = origem;
   if (pagina) extras.pagina = pagina;
-  for (const [k, v] of Object.entries(utm)) extras[k === "fbclid" ? k : `utm_${k}`] = String(v);
+  for (const [k, v] of Object.entries(utm)) extras[k] = String(v);
 
   // Com event_id (landing /planejadores), o Lead também vai pela API de Conversões
   // depois da resposta, com o mesmo id do Pixel para o Meta não contar duas vezes.
   const eventId = String(formData.get("_event_id") ?? "");
   const sucesso = (message: string): ContactState => {
+    if (valores.classificacao === "quente") after(() => alertarLeadQuente(valores, extras));
     if (/^[\w-]{8,64}$/.test(eventId)) {
       after(() =>
         enviarLeadCapi({
