@@ -1,0 +1,110 @@
+/* Prévia Performei: tudo preso em .pf para não vazar para o site da Slick. */
+
+.pf {
+  --pf-tinta: #1c2147;
+  --pf-papel: #f5f2ec;
+  --pf-azul: #4ba6e2;
+  --pf-linha: #ddd6c8;
+  --pf-curva: cubic-bezier(0.2, 0.7, 0.1, 1);
+  --pf-curva-io: cubic-bezier(0.65, 0, 0.35, 1);
+  font-family: var(--font-poppins), system-ui, sans-serif;
+}
+
+/* Títulos: Bricolage Grotesque; o destaque (<em>) vai por cor, sem itálico. */
+.pf-titulo {
+  font-family: var(--font-bricolage), var(--font-poppins), system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+.pf-titulo em { font-style: normal; }
+
+/* Entrada do hero: roda no primeiro paint, sem esperar JavaScript. */
+@keyframes pf-sobe {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes pf-aparece {
+  from { opacity: 0; transform: scale(1.04); }
+  to { opacity: 1; transform: none; }
+}
+.pf-entra { animation: pf-sobe 1s var(--pf-curva) both; animation-delay: var(--d, 0ms); }
+.pf-entra-foto { animation: pf-aparece 1.6s var(--pf-curva) both; animation-delay: 150ms; }
+
+/* Ao rolar: só esconde quando o JS liga .pf-anim (sem JS, tudo aparece). */
+.pf-anim [data-revelar] {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 1s var(--pf-curva), transform 1s var(--pf-curva);
+  transition-delay: var(--d, 0ms);
+}
+.pf-anim [data-revelar].pf-visivel { opacity: 1; transform: none; }
+
+.pf-anim [data-traco] {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.6s var(--pf-curva-io) 0.25s;
+}
+.pf-anim [data-traco].pf-visivel { transform: scaleX(1); }
+@media (max-width: 1023px) {
+  .pf-anim [data-traco] { transform: scaleY(0); transform-origin: top; }
+  .pf-anim [data-traco].pf-visivel { transform: scaleY(1); }
+}
+
+/* Botão: o preenchimento sobe por trás do texto. */
+.pf-botao { position: relative; overflow: hidden; isolation: isolate; transition: color 0.45s var(--pf-curva-io), border-color 0.45s; }
+.pf-botao::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--pf-preenche, #fff);
+  transform: translateY(101%);
+  transition: transform 0.55s var(--pf-curva-io);
+}
+.pf-botao:hover::before, .pf-botao:focus-visible::before { transform: none; }
+.pf-botao .pf-seta { transition: transform 0.55s var(--pf-curva-io); }
+.pf-botao:hover .pf-seta { transform: translateX(4px); }
+
+/* Link: o sublinhado corre da esquerda para a direita. */
+.pf-link {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.5s var(--pf-curva-io);
+}
+.pf-link:hover, .group:hover .pf-link { background-size: 100% 1px; }
+
+/* Cursor próprio (só mouse/trackpad). */
+.pf-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 999px;
+  background: var(--pf-azul);
+  border: 1px solid transparent;
+  pointer-events: none;
+  opacity: 0;
+  transition: width 0.35s var(--pf-curva), height 0.35s var(--pf-curva), margin 0.35s var(--pf-curva),
+    background-color 0.35s, border-color 0.35s, opacity 0.3s;
+}
+.pf-cursor.pf-ativo { opacity: 1; }
+.pf-cursor.pf-grande {
+  width: 54px;
+  height: 54px;
+  margin: -27px 0 0 -27px;
+  background: rgba(75, 166, 226, 0.14);
+  border-color: var(--pf-azul);
+}
+@media (pointer: fine) {
+  .pf-cursor-on, .pf-cursor-on a, .pf-cursor-on button, .pf-cursor-on summary { cursor: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pf-entra, .pf-entra-foto { animation: none; }
+  .pf-botao::before, .pf-link, .pf-botao .pf-seta { transition: none; }
+}
