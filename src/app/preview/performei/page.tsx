@@ -120,10 +120,10 @@ function Hero() {
             className="pf-titulo pf-entra max-w-[12em] text-[2.6rem] leading-[1.02] sm:text-[3.8rem] lg:text-[4.2rem] xl:text-[4.7rem]"
             style={atraso(0)}
           >
-            Finanças organizadas e <em className="text-[#4BA6E2]">direção estratégica</em> para a sua pequena empresa crescer.
+            Finanças organizadas e <em className="text-[#4BA6E2]">direção estratégica</em> para a sua empresa crescer.
           </h1>
           <p className="pf-entra mt-9 max-w-[29rem] text-[17px] leading-[1.7] text-white/70 sm:text-lg" style={atraso(260)}>
-            Sou o Rubens Queiroz. Ajudo donos de pequenas empresas a sair do operacional, organizar o caixa e tomar decisões com clareza.
+            Sou o Rubens Queiroz. Ajudo donos de empresas a sair do operacional, organizar o caixa e tomar decisões com clareza.
           </p>
           <div className="pf-entra mt-12 flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-9" style={atraso(380)}>
             <a

@@ -32,7 +32,7 @@ const montserrat = Montserrat({
 export const metadata: Metadata = {
   title: { absolute: "Performei Consultoria | Rubens Queiroz" },
   description:
-    "Consultoria financeira e planejamento estratégico para pequenas empresas.",
+    "Consultoria financeira e planejamento estratégico para empresas.",
   robots: {
     index: false,
     follow: false,
